@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('grade');
             $table->string('language');
             $table->float('score')->nullable();
-            $table->float('rankPercentage')->nullable();
+            $table->float('rankPercentile')->nullable();
             $table->foreignId('event_id')->constrained();
             $table->foreignId('student_id')->constrained();
             $table->foreignId('school_id')->constrained();

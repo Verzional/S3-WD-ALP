@@ -35,7 +35,7 @@ class CompanionController extends Controller
             'status' => 'required|string|max:255',
             'contact' => 'required|numeric',
             'currentlyActive' => 'required|boolean',
-            'school_id' => 'exists:schools,id'
+            'school_id' => 'nullable|exists:schools,id'
         ]);
            
         $companion = Companion::create($validated);

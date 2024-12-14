@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Event;
 use App\Models\Schedule;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,12 +30,23 @@ class DatabaseSeeder extends Seeder
             ['name' => 'D', 'description' => 'Jam 14:30 - 16:00']
         ];
 
+        $events = [
+            ['year' => 2021, 'description' => 'This is Bebras 2021', 'scheduleDescription' => 'Schedule'],
+            ['year' => 2022, 'description' => 'This is Bebras 2022', 'scheduleDescription' => 'Schedule'],
+            ['year' => 2023, 'description' => 'This is Bebras 2023', 'scheduleDescription' => 'Schedule'],
+            ['year' => 2024, 'description' => 'This is Bebras 2024', 'scheduleDescription' => 'Schedule']
+        ];
+
         foreach ($categories as $category) {
             Category::create($category);
         }
 
         foreach ($schedules as $schedule) {
             Schedule::create($schedule);
+        }
+
+        foreach ($events as $event) {
+            Event::create($event);
         }
     }
 }

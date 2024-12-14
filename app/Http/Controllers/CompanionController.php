@@ -31,16 +31,23 @@ class CompanionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
-            'contact' => 'required|numeric',
-            'currentlyActive' => 'required|boolean',
+            'companionName' => 'required|string|max:255',
+            'companionStatus' => 'required|string|max:255',
+            'companionContact' => 'required|numeric',
             'school_id' => 'nullable|exists:schools,id'
         ]);
-           
-        $companion = Companion::create($validated);
 
-        return redirect()->route('companions.index')->with('success', 'Companion created successfully.');
+        $validated['currentlyActive'] = true;
+           
+        $companion = Companion::create([
+            'name' => $validated['companionName'],
+            'status' => $validated['companionStatus'],
+            'contact' => $validated['companionContact'],
+            'currentlyActive' => $validated['currentlyActive'],
+            'school_id' => $validated['school_id']
+        ]);
+
+        return $companion->id;
     }
 
     /**

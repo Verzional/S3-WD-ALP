@@ -28,7 +28,7 @@ class RegistrationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $companionId, $studentId)
     {
         $validated = $request->validate([
             'level' => 'required|string|max:255',
@@ -36,17 +36,18 @@ class RegistrationController extends Controller
             'language' => 'required|string|max:255',
             'score' => 'nullable|numeric|min:0|max:100',
             'rankPercentile' => 'nullable|numeric|min:0|max:100',
-            'event_id' => 'required|exists:events,id',
-            'student_id' => 'required|exists:students,id',
             'school_id' => 'required|exists:schools,id',
-            'companion_id' => 'required|exists:companions,id',
             'category_id' => 'required|exists:categories,id',
             'schedule_id' => 'required|exists:schedules,id'
         ]);
 
-        $registration = Registration::create($validated);
+        $validated['event_id'] = 1;
+        $validated['companion_id'] = $companionId;
+        $validated['student_id'] = $studentId;
 
-        return redirect()->route('registrations.index')->with('success', 'Registration created successfully.');
+        Registration::create($validated);
+
+        return redirect()->route('registrations.create')->with('success', 'Registration created successfully.');
     }
 
     /**

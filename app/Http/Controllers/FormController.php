@@ -43,15 +43,18 @@ class FormController extends Controller
         DB::beginTransaction();
 
         try {
+            $studentController = new StudentController;
+            $studentId = $studentController->store($request);
+
             $companionController = new CompanionController;
             $companionId = $companionController->store($request);
 
-            $studentController = new StudentController;
-            $studentController->store($request, $companionId);
+            $registrationController = new RegistrationController;
+            $registrationController->store($request, $companionId, $studentId);
 
             DB::commit();
 
-            return redirect()->route('home')->with('success', 'Registration successful!');
+            return redirect()->route('forms.create')->with('success', 'Registration successful!');
         } catch (Exception $e) {
             DB::rollback();
 

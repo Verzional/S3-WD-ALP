@@ -9,21 +9,21 @@
                 <!-- Step 1 -->
                 <div id="step-1" class="step">
                     <!-- Name Field -->
-                    <label for="name" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nama
+                    <label for="studentName" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nama
                         Lengkap</label>
-                    <input type="text" id="name" name="name"
+                    <input type="text" id="studentName" name="studentName"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Nama Lengkap" required />
 
                     <!-- Email Field -->
-                    <label for="email" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Email</label>
-                    <input type="email" id="email" name="email"
+                    <label for="studentEmail" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Email</label>
+                    <input type="email" id="studentEmail" name="studentEmail"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Email Anda" required />
 
                     <!-- Gender Field -->
-                    <label for="gender" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Gender</label>
-                    <select id="gender" name="gender"
+                    <label for="studentGender" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Gender</label>
+                    <select id="studentGender" name="studentGender"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
                         <option value="" disabled selected>Pilih Gender</option>
@@ -32,9 +32,9 @@
                     </select>
 
                     <!-- Contact Field -->
-                    <label for="contact" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nomor
+                    <label for="studentContact" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nomor
                         HP</label>
-                    <input type="tel" id="contact" name="contact"
+                    <input type="tel" id="studentContact" name="studentContact"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Nomor HP Siswa/Orang Tua/ Wali" required />
 
@@ -110,16 +110,16 @@
                 <!-- Step 3 -->
                 <div id="step-3" class="step hidden">
                     <!-- Companion Name Field -->
-                    <label for="c-name" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nama
+                    <label for="companionName" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nama
                         Pendamping</label>
-                    <input type="text" id="c-name" name="c-name"
+                    <input type="text" id="companionName" name="companionName"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Nama Pendamping" required />
 
                     <!-- Companion Status Field -->
-                    <label for="c-status" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Status
+                    <label for="companionStatus" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Status
                         Pendamping</label>
-                    <select id="c-status" name="c-status"
+                    <select id="companionStatus" name="companionStatus"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
                         <option value ="" disabled selected>Pilih Status</option>
@@ -129,9 +129,9 @@
                     </select>
 
                     <!-- Companion Contact Field -->
-                    <label for="c-contact" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nomor HP
+                    <label for="companionContact" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nomor HP
                         Pendamping</label>
-                    <input type="tel" id="c-contact" name="c-contact"
+                    <input type="tel" id="companionContact" name="companionContact"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Nomor HP Pendamping" required />
 
@@ -151,7 +151,7 @@
                     <!-- Language Field -->
                     <label for="language" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Bahasa yang
                         Dipilih</label>
-                    <select id="language" name="language_id"
+                    <select id="language" name="language"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
                         <option value="" disabled selected>Pilih Bahasa</option>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -11,7 +12,9 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::all();
+
+        return view('events.index', compact('events'));
     }
 
     /**
@@ -19,7 +22,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view('events.create');
     }
 
     /**
@@ -27,38 +30,56 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'year' => 'required|integer',
+            'description' => 'required|string',
+            'scheduleDescription' => 'required|string'
+        ]);
+
+        $event = Event::create($validated);
+
+        return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Event $event)
     {
-        //
+        return view('events.show', compact('event'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Event $event)
     {
-        //
+        return view('events.edit', compact('event'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Event $event)
     {
-        //
+        $validated = $request->validate([
+            'year' => 'required|integer',
+            'description' => 'required|string',
+            'scheduleDescription' => 'required|string'
+        ]);
+
+        $event->update($validated);
+
+        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Event $event)
     {
-        //
+        $event->delete();
+
+        return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
     }
 }

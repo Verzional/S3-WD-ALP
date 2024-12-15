@@ -16,6 +16,10 @@ class School extends Model
         return $this->hasMany(Companion::class);
     }
 
+    public static function dataWithID($id){
+        return static::find($id);
+    }
+
     public function registrations()
     {
         return $this->hasMany(Registration::class);

@@ -45,4 +45,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public static function dataWithID($id){
+        return static::find($id);
+    }
 }

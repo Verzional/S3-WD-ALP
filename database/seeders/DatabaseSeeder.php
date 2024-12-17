@@ -1,10 +1,11 @@
 <?php
 
 namespace Database\Seeders;
-
 use App\Models\Category;
 use App\Models\Event;
 use App\Models\Schedule;
+
+
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
         $categories = [
             ['name' => 'SiKecil', 'description' => 'Kelas 1-3'],
             ['name' => 'Siaga', 'description' => 'Kelas 4-6'],

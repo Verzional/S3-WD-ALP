@@ -40,4 +40,8 @@ class Registration extends Model
     {
         return $this->belongsTo(Schedule::class);
     }
+
+    public static function dataWithID($id){
+        return static::find($id);
+    }
 }

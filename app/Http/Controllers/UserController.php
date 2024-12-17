@@ -4,19 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\User;
+
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function index(){
+        $users = User::paginate(10);
+            return view('AdminUsers',[
+                'title' => 'Users',
+                'users' => $users
+            ]);
+
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function detailUser($id){
+        return view('AdminDetailUser',[
+            'title' => 'User Information',
+            'user' =>User::dataWithID($id)
+        ]);
+    }
     public function create()
     {
         //

@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $students = Student::all();
-        return view('students.index', compact('students'));
+    public function index(){
+        $projects = Project::all();
+            return view('detail',[
+                'title' => 'Detail',
+                'name' => 'Rex',
+                'projects' => $projects
+            ]);
+
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function detailID($id){
+        return view('detailed',[
+            'title' => 'Project',
+            'name' => 'Rex',
+            'project' =>Project::dataWithID($id)
+        ]);
+    }
+
     public function create()
     {
         return view('students.create');

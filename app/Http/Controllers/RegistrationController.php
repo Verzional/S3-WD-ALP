@@ -7,19 +7,25 @@ use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $registrations = Registration::all();
+    public function index(){
+        $registrations = Registration::paginate(10);
+            return view('AdminParticipants',[
+                'title' => 'Participants',
+                'registrations' => $registrations
+            ]);
 
-        return view('registrations.index', compact('registrations'));
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function detailRegistration($registration_id){
+            return view('AdminDetailParticipant',[
+                'title' => 'Participant Information',
+                'registration' => Registration::dataWithID($registration_id)
+            ]);
+
+        
+    }
+
     public function create()
     {
         return view('registrations.create');
@@ -99,4 +105,5 @@ class RegistrationController extends Controller
 
         return redirect()->route('registrations.index')->with('success', 'Registration deleted successfully.');
     }
+    
 }

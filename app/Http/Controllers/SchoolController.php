@@ -7,19 +7,24 @@ use Illuminate\Http\Request;
 
 class SchoolController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $schools = School::all();
+    public function index(){
+        $schools = School::paginate(10);
+            return view('AdminSchools',[
+                'title' => 'Schools',
+                'schools' => $schools
+            ]);
 
-        return view('schools.index', compact('schools'));
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function detailSchool($id){
+
+        return view('AdminDetailSchool',[
+            'title' => 'School Information',
+            'school' =>School::dataWithID($id)
+        ]);
+    }
+
     public function create()
     {
         return view('schools.create');

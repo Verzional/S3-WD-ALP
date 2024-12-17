@@ -7,19 +7,23 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $events = Event::all();
+    public function index(){
+        $events = Event::paginate(10);
+            return view('AdminEvents',[
+                'title' => 'Events',
+                'events' => $events
+            ]);
 
-        return view('events.index', compact('events'));
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function detailEvent($id){
+        return view('AdminDetailEvent',[
+            'title' => 'Event Information',
+            'event' => Event::dataWithID($id)
+        ]);
+    }
+
     public function create()
     {
         return view('events.create');

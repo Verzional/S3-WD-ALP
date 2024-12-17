@@ -17,7 +17,7 @@
             <td class="text-center lg:text-base text-3xl p-2">{{ substr($stu->password, 0, 10) }}</td>
             <td class="text-center lg:text-base text-3xl hidden lg:table-cell p-2">{{ $stu->bebras_username }}</td>
             <td class="text-center lg:text-base text-3xl hidden lg:table-cell p-2">{{ $stu->bebras_password }}</td>
-            <td class="px-10 lg:text-base text-3xl py-10"><a href="detailUser/{{ $stu['id'] }}">Edit</a></td>
+            <td class="px-10 lg:text-base text-3xl py-10 lg:py-0"><a href="detailUser/{{ $stu['id'] }}">Edit</a></td>
         </tr>
         @endforeach
     </table>

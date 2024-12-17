@@ -1,16 +1,13 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 
-Route::get('/', function () {
-    return view('AdminDashboard',[
-        'title'=> 'Dashboard',
-    ]);
-});
+Route::get('/', [DashboardController::class,'index']);
 
 Route::get('/participants', [RegistrationController::class, 'index']);
 

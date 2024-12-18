@@ -18,11 +18,11 @@ class CompanionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>$this->faker->name,
-            'status'=> $this->faker->randomElement(['Guru','Orang Tua', 'Wali']),
-            'contact'=> $this->faker->phoneNumber,
-            'currentlyActive'=> $this->faker->boolean(),
-            'school_id'=> School::inRandomOrder()->first()->id
+            'name' => $this->faker->name,
+            'status' => $this->faker->randomElement(['Guru', 'Orang Tua', 'Wali']),
+            'contact' => $this->faker->phoneNumber,
+            'currentlyActive' => $this->faker->boolean(),
+            'school_id' => School::inRandomOrder()->first()->id
         ];
     }
 }

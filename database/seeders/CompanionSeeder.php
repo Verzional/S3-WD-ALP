@@ -13,6 +13,6 @@ class CompanionSeeder extends Seeder
      */
     public function run(): void
     {
-       Companion::factory()->count(10)->create();
+        Companion::factory()->count(10)->create();
     }
 }

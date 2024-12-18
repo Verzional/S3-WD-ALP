@@ -1,11 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanionController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StudentController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\UserController;
@@ -18,21 +18,13 @@ Route::get('/', function () {
 });
 
 Route::get('/participants', [RegistrationController::class, 'index']);
-
 Route::get('/detailParticipant/{registration_id}', [RegistrationController::class, 'detailRegistration']);
-
 Route::get('/schools', [SchoolController::class, 'index']);
-
 Route::get('/detailSchool/{school_id}', [SchoolController::class, 'detailSchool']);
-
 Route::get('/users', [UserController::class,'index']);
-
 Route::get('/detailUser/{user_id}', [UserController::class,'detailUser']);
-
 Route::get('/events', [EventController::class,'index']);
-
 Route::get('/detailEvent/{event_id}', [EventController::class,'detailEvent']);
-
 Route::resource('categories', CategoryController::class);
 Route::resource('companions', CompanionController::class);
 Route::resource('events', EventController::class);

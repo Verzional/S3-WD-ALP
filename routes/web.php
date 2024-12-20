@@ -17,6 +17,7 @@ Route::get('/', function () {
     ]);
 });
 
+//Getter
 Route::get('/participants', [RegistrationController::class, 'index']);
 Route::get('/detailParticipant/{registration_id}', [RegistrationController::class, 'detailRegistration']);
 Route::get('/schools', [SchoolController::class, 'index']);
@@ -25,6 +26,11 @@ Route::get('/users', [UserController::class,'index']);
 Route::get('/detailUser/{user_id}', [UserController::class,'detailUser']);
 Route::get('/events', [EventController::class,'index']);
 Route::get('/detailEvent/{event_id}', [EventController::class,'detailEvent']);
+
+//Export
+Route::get('/export', [RegistrationController::class, 'exportCSV'])->name('export');
+
+//Resource
 Route::resource('categories', CategoryController::class);
 Route::resource('companions', CompanionController::class);
 Route::resource('events', EventController::class);

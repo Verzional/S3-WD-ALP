@@ -26,4 +26,7 @@
     <div class="mt-4" >
         {{ $registrations->links() }}
     </div>
+
+    {{-- Export to CSV --}}
+    <a href="{{ route('export') }}" class="bg-[#5D6749] text-white text-center text-3xl p-2 rounded-md mt-4">Export to CSV</a>
 </x-account-layout>

@@ -2,33 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Registration;
+use App\Models\Schedule;
+use App\Models\School;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RegistrationController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $registrations = Registration::paginate(10);
-            return view('AdminParticipants',[
-                'title' => 'Participants',
-                'registrations' => $registrations
-            ]);
-
-        
+        return view('AdminParticipants', [
+            'title' => 'Participants',
+            'registrations' => $registrations
+        ]);
     }
 
-    public function detailRegistration($registration_id){
-            return view('AdminDetailParticipant',[
-                'title' => 'Participant Information',
-                'registration' => Registration::dataWithID($registration_id)
-            ]);
-
-        
+    public function detailRegistration($registration_id)
+    {
+        return view('AdminDetailParticipant', [
+            'title' => 'Participant Information',
+            'registration' => Registration::dataWithID($registration_id)
+        ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('registrations.create');
+        $schools = School::select(
+            'id',
+            DB::raw("CONCAT(name, ' - ', city) as school_formatted")
+        )->get();
+        $categories = Category::select(
+            'id',
+            DB::raw("CONCAT(name, ' (', description, ')') as category_formatted")
+        )->get(
+        );
+        $schedules = Schedule::select(
+            'id',
+            DB::raw("CONCAT(name, ' - ', description) as schedule_formatted")
+        )->get(
+        );
+
+        return view('Registration', compact('schools', 'categories', 'schedules'));
     }
 
     /**
@@ -105,5 +125,55 @@ class RegistrationController extends Controller
 
         return redirect()->route('registrations.index')->with('success', 'Registration deleted successfully.');
     }
-    
+
+    /**
+     * Export the registrations to a CSV file.
+     */
+    public function exportCSV()
+    {
+        $registrations = Registration::with(['event', 'student', 'school', 'companion', 'category', 'schedule'])->get();
+
+        $filename = "registrations.csv";
+        $handle = fopen($filename, 'w+');
+
+        fputcsv($handle, [
+            'ID',
+            'Level',
+            'Grade',
+            'Language',
+            'Score',
+            'Rank Percentile',
+            'Event Year',
+            'Student Name',
+            'School Name',
+            'Companion Name',
+            'Category Name',
+            'Session Name'
+        ]);
+
+        foreach ($registrations as $registration) {
+            fputcsv($handle, [
+                $registration->id,
+                $registration->level,
+                $registration->grade,
+                $registration->language,
+                $registration->score,
+                $registration->rankPercentile,
+                $registration->event->year ?? 'N/A',
+                $registration->student->name ?? 'N/A',
+                $registration->school->name ?? 'N/A',
+                $registration->companion->name ?? 'N/A',
+                $registration->category->name ?? 'N/A',
+                $registration->schedule->name ?? 'N/A',
+            ]);
+        }
+
+        fclose($handle);
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+        ];
+
+        return response()->download($filename, 'registrations.csv', $headers);
+    }
 }

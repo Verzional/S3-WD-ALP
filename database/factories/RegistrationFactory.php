@@ -38,7 +38,7 @@ class RegistrationFactory extends Factory
             },
             'language'=> $this->faker->randomElement(['Indonesian','English']),
             'score'=> $this->faker->randomFloat(2, 0, 100),
-            'rankPercentage'=> $this->faker->randomFloat(2, 0, 100),
+            'rankPercentile'=> $this->faker->randomFloat(2, 0, 100),
             'event_id'=> Event::inRandomOrder()->first()->id,
             'student_id'=> Student::factory(),
             'school_id'=> School::inRandomOrder()->first()->id,

@@ -3,13 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registration;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
 {
     public function index(){
-        $registrations = Registration::paginate(10);
-            return view('AdminParticipants',[
+        $registrations = Registration::paginate(8);
+            return view('admin.AdminParticipants',[
+                'title' => 'Participants',
+                'registrations' => $registrations
+            ]);
+
+        
+    }
+
+    public function companion(){
+        $user = User::find(session('user'));
+        $registrations = Registration::where('companion_id', '=',$user->account_id)->paginate(8);
+            return view('companion.CompanionParticipants',[
                 'title' => 'Participants',
                 'registrations' => $registrations
             ]);
@@ -18,13 +30,22 @@ class RegistrationController extends Controller
     }
 
     public function detailRegistration($registration_id){
-            return view('AdminDetailParticipant',[
+            return view('admin.AdminDetailParticipant',[
                 'title' => 'Participant Information',
                 'registration' => Registration::dataWithID($registration_id)
             ]);
 
         
     }
+
+    public function detailCompanionRegistration($registration_id){
+        return view('companion.CompanionDetailParticipant',[
+            'title' => 'Participant Information',
+            'registration' => Registration::dataWithID($registration_id)
+        ]);
+
+    
+}
 
     public function create()
     {

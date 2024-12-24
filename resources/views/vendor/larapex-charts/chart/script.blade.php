@@ -18,20 +18,34 @@
             labels: {!! json_encode($chart->labels(), true) !!},
         @endif
         title: {
-            text: "{!! $chart->title() !!}"
+            text: "{!! $chart->title() !!}",
+            style: {
+                fontSize: '28px',
+                offsetY: -20
+
+            }
         },
         subtitle: {
             text: '{!! $chart->subtitle() !!}',
-            align: '{!! $chart->subtitlePosition() !!}'
+            align: '{!! $chart->subtitlePosition() !!}',
+            style:{
+                fontSize: '18px'
+            }
         },
         xaxis: {
-            categories: {!! $chart->xAxis() !!}
+            categories: {!! $chart->xAxis() !!},
+            labels: {
+                style: {
+                    fontSize: '16px' 
+                }
+            }
         },
         grid: {!! $chart->grid() !!},
         markers: {!! $chart->markers() !!},
         @if($chart->stroke())
             stroke: {!! $chart->stroke() !!},
         @endif
+        
     }
 
     var chart = new ApexCharts(document.querySelector("#{!! $chart->id() !!}"), options);

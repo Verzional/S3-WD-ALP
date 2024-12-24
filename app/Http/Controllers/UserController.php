@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index(){
         $users = User::paginate(10);
-            return view('AdminUsers',[
+            return view('admin.AdminUsers',[
                 'title' => 'Users',
                 'users' => $users
             ]);
@@ -19,9 +19,23 @@ class UserController extends Controller
     }
 
     public function detailUser($id){
-        return view('AdminDetailUser',[
+        return view('admin.AdminDetailUser',[
             'title' => 'User Information',
             'user' =>User::dataWithID($id)
+        ]);
+    }
+
+    public function studentDetailUser(){
+        return view('student.StudentDetailUser',[
+            'title' => 'User Information',
+            'user' =>User::dataWithID(session('user')),
+        ]);
+    }
+
+    public function companionDetailUser(){
+        return view('companion.CompanionDetailUser',[
+            'title' => 'User Information',
+            'user' =>User::dataWithID(session('user')),
         ]);
     }
     public function create()

@@ -1,0 +1,17 @@
+@keyframes fadeIn{
+    0%{
+        opacity: 0%;
+        transform: translateY(-10%);
+    }
+
+    100%{
+        opacity: 100%;
+        transform: translateY(0%);
+    }
+}
+
+
+
+#containerLR{
+    animation: fadeIn 1s linear;
+}

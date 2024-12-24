@@ -9,7 +9,7 @@ class SchoolController extends Controller
 {
     public function index(){
         $schools = School::paginate(10);
-            return view('AdminSchools',[
+            return view('admin.AdminSchools',[
                 'title' => 'Schools',
                 'schools' => $schools
             ]);
@@ -19,7 +19,7 @@ class SchoolController extends Controller
 
     public function detailSchool($id){
 
-        return view('AdminDetailSchool',[
+        return view('admin.AdminDetailSchool',[
             'title' => 'School Information',
             'school' =>School::dataWithID($id)
         ]);

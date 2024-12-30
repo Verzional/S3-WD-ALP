@@ -39,14 +39,14 @@ class RegistrationFactory extends Factory
                         return null;
                 }
             },
-            'language' => $this->faker->randomElement(['Indonesian', 'English']),
-            'score' => $this->faker->randomFloat(2, 0, 100),
-            'rankPercentile' => $this->faker->randomFloat(2, 0, 100),
-            'event_id' => Event::inRandomOrder()->first()->id,
-            'student_id' => Student::factory(),
-            'school_id' => School::inRandomOrder()->first()->id,
-            'companion_id' => Companion::factory(),
-            'category_id' => Category::inRandomOrder()->first()->id,
+            'language'=> $this->faker->randomElement(['Indonesian','English']),
+            'score'=> $this->faker->randomFloat(2, 0, 100),
+            'rankPercentile'=> $this->faker->randomFloat(2, 0, 100),
+            'event_id'=> Event::inRandomOrder()->first()->id,
+            'student_id'=> Student::factory(),
+            'school_id'=> School::inRandomOrder()->first()->id,
+            'companion_id'=>Companion::factory(),
+            'category_id' => Category::inRandomOrder()->first()->id, 
             'schedule_id' => Schedule::inRandomOrder()->first()->id,
         ];
     }

@@ -9,7 +9,7 @@ class EventController extends Controller
 {
     public function index(){
         $events = Event::paginate(10);
-            return view('AdminEvents',[
+            return view('admin.AdminEvents',[
                 'title' => 'Events',
                 'events' => $events
             ]);
@@ -18,7 +18,7 @@ class EventController extends Controller
     }
 
     public function detailEvent($id){
-        return view('AdminDetailEvent',[
+        return view('admin.AdminDetailEvent',[
             'title' => 'Event Information',
             'event' => Event::dataWithID($id)
         ]);

@@ -1,0 +1,43 @@
+<x-account-layout>
+    <x-slot:header>
+        {{ $title }}
+        <p class="p-5 ml-10 px-10 bg-[#FFC815] rounded-[20px] w-fit font-bold text-3xl text-[#FCF9F4]">{{ $year }}</p>
+    </x-slot>
+
+        
+
+    <div class="flex justify-center gap-5 mt-5">
+
+        <div class="flex flex-col bg-[#FCF9F4] py-10 p-5 justify-center rounded-[50px] basis-[50%] shadow-sm items-center ">
+            <p class="text-4xl font-bold text-[#FFC815] mb-5">{{ $schedule }}</p>
+            <p class="text-2xl font-bold text-black">Schedule</p>
+        </div>
+        <div class="flex flex-col bg-[#FCF9F4] py-10 px-10 justify-center rounded-[50px] basis-[20%] shadow-sm items-center ">
+            <p class="text-5xl font-bold text-[#FFC815] mb-5">{{ $registration->grade }}</p>
+            <p class="text-2xl font-bold text-black">Grade</p>
+        </div>
+        <div class="flex flex-col bg-[#FCF9F4] py-10 p-5 justify-center rounded-[50px] basis-[30%] shadow-sm items-center ">
+            <p class="text-5xl font-bold text-[#FFC815] mb-5">{{ $registration->language }}</p>
+            <p class="text-2xl font-bold text-black">Language</p>
+        </div>
+
+    </div>
+    <div class="flex gap-5 mt-5 justify-center items-center">
+        <div class="flex flex-col bg-[#FCF9F4] py-20 p-5 justify-center rounded-[50px] shadow-sm items-center basis-[33%]">
+            
+            <p class="text-5xl font-bold text-[#FFC815] mb-5">{{ $score }}</p>
+            <p class="text-2xl font-bold text-black">Score</p>
+        </div>
+        <div class="flex flex-col bg-[#FCF9F4] py-20 p-5 justify-center shadow-sm rounded-[50px] items-center basis-[33%]">
+            
+            <p class="text-5xl font-bold text-[#FFC815] mb-5">{{ $rank }} %</p>
+            <p class="text-2xl font-bold text-center text-black">Rank Percentile</p>
+        </div>
+
+        <div class="flex flex-col bg-[#FCF9F4] py-20 p-5 justify-center rounded-[50px] shadow-sm items-center basis-[33%]">
+            
+            <p class="text-5xl font-bold text-[#FFC815] mb-5">{{ $category }}</p>
+            <p class="text-2xl font-bold text-black">Category</p>
+        </div>
+    </div>
+</x-account-layout>

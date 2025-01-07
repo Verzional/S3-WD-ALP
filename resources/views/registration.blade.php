@@ -125,7 +125,8 @@
                     </select>
 
                     <!-- Companion Contact Field -->
-                    <label for="companionContact" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nomor
+                    <label for="companionContact"
+                        class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nomor
                         HP
                         Pendamping</label>
                     <input type="tel" id="companionContact" name="companionContact"
@@ -193,14 +194,26 @@
         </div>
     </div>
 
-    <!-- Script -->
+    <!-- Form Script -->
     <script>
         function nextStep(step) {
-            const steps = document.querySelectorAll('.step');
-            steps.forEach((step) => step.classList.add('hidden'));
+            const currentStep = document.querySelector(`#step-${step - 1}`);
+            const inputs = currentStep.querySelectorAll('input, select');
 
-            document.getElementById('step-' + step).classList.remove('hidden');
+            let isValid = true;
+            inputs.forEach((input) => {
+                if (!input.reportValidity()) {
+                    isValid = false;
+                }
+            });
+
+            if (isValid) {
+                const steps = document.querySelectorAll('.step');
+                steps.forEach((step) => step.classList.add('hidden'));
+                document.getElementById('step-' + step).classList.remove('hidden');
+            }
         }
+
 
         function prevStep(step) {
             const steps = document.querySelectorAll('.step');

@@ -176,4 +176,38 @@ class RegistrationController extends Controller
 
         return response()->download($filename, 'registrations.csv', $headers);
     }
+
+    /**
+     * Import registrations from a CSV file.
+     */
+    public function importCSV(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+
+        $path = $request->file('file')->getRealPath();
+        $data = array_map('str_getcsv', file($path));
+
+        if (count($data) > 0) {
+            foreach ($data as $row) {
+                $registration = new Registration([
+                    'level' => $row[1],
+                    'grade' => $row[2],
+                    'language' => $row[3],
+                    'score' => $row[4],
+                    'rankPercentile' => $row[5],
+                    'event_id' => $row[6],
+                    'student_id' => $row[7],
+                    'school_id' => $row[8],
+                    'companion_id' => $row[9],
+                    'category_id' => $row[10],
+                    'schedule_id' => $row[11]
+                ]);
+
+                $registration->save();
+            }
+        }
+
+        return redirect()->route('registrations.index')->with('success', 'Registrations imported successfully.');
+    }
 }

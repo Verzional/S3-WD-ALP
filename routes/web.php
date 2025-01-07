@@ -31,11 +31,11 @@ Route::get('/detailEvent/{event_id}', [EventController::class,'detailEvent']);
 Route::get('/export', [RegistrationController::class, 'exportCSV'])->name('export');
 
 //Resource
-Route::resource('categories', CategoryController::class);
-Route::resource('companions', CompanionController::class);
-Route::resource('events', EventController::class);
-Route::resource('forms', FormController::class);
-Route::resource('registrations', RegistrationController::class);
-Route::resource('schedules', ScheduleController::class);
-Route::resource('schools', SchoolController::class);
-Route::resource('students', StudentController::class);
+Route::resource('/categories', CategoryController::class);
+Route::resource('/companions', CompanionController::class);
+Route::resource('/events', EventController::class);
+Route::resource('/forms', FormController::class);
+Route::resource('/registrations', RegistrationController::class);
+Route::resource('/schedules', ScheduleController::class);
+Route::resource('/schools', SchoolController::class);
+Route::resource('/students', StudentController::class);

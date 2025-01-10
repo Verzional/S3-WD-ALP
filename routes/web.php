@@ -50,6 +50,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/schools', [SchoolController::class, 'index']);
     Route::get('/detailSchool/{school_id}', [SchoolController::class, 'detailSchool']);
     Route::get('/events', [EventController::class, 'index']);
+    Route::get('/events/create', [EventController::class, 'index']);
     Route::get('/detailEvent/{event_id}', [EventController::class, 'detailEvent']);
     Route::get('/editEvent/{event_id}', [EventController::class, 'editEvent']);
     Route::put('/updateEvent', [EventController::class, 'update']);

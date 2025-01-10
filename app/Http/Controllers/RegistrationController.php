@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Registration;
+use App\Models\School;
+use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception;
+
 class RegistrationController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $search = $request->input('search');
         $registrations = Registration::where(function ($query) use ($search) {
             if ($search) {
@@ -22,60 +27,55 @@ class RegistrationController extends Controller
                 });
             }
         })->paginate(8);
-            return view('admin.AdminParticipants',[
-                'title' => 'Participants',
-                'registrations' => $registrations
-            ]);
-
-        
+        return view('admin.AdminParticipants', [
+            'title' => 'Participants',
+            'registrations' => $registrations
+        ]);
     }
 
-    public function companion(Request $request){
+    public function companion(Request $request)
+    {
         $user = User::find(session('user'));
         $search = $request->input('search');
 
         $registrations = Registration::where('companion_id', $user->account_id)
-        ->where(function ($query) use ($search) {
-            if ($search) {
-                $query->whereHas('student', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%');
-                })->orWhereHas('school', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%');
-                })->orWhereHas('category', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%');
-                });
-            }
-        })
-        ->paginate(8);
-            return view('companion.CompanionParticipants',[
-                'title' => 'Participants',
-                'registrations' => $registrations
-            ]);
-
-        
+            ->where(function ($query) use ($search) {
+                if ($search) {
+                    $query->whereHas('student', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    })->orWhereHas('school', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    })->orWhereHas('category', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    });
+                }
+            })
+            ->paginate(8);
+        return view('companion.CompanionParticipants', [
+            'title' => 'Participants',
+            'registrations' => $registrations
+        ]);
     }
 
-    public function detailRegistration($registration_id){
-            return view('admin.AdminDetailParticipant',[
-                'title' => 'Participant Information',
-                'registration' => Registration::dataWithID($registration_id)
-            ]);
-
-        
-    }
-
-    public function detailCompanionRegistration($registration_id){
-        return view('companion.CompanionDetailParticipant',[
+    public function detailRegistration($registration_id)
+    {
+        return view('admin.AdminDetailParticipant', [
             'title' => 'Participant Information',
             'registration' => Registration::dataWithID($registration_id)
         ]);
-        
-
-    
     }
 
-    public function editRegistration($registration_id){
-        $registration= Registration::dataWithID($registration_id);
+    public function detailCompanionRegistration($registration_id)
+    {
+        return view('companion.CompanionDetailParticipant', [
+            'title' => 'Participant Information',
+            'registration' => Registration::dataWithID($registration_id)
+        ]);
+    }
+
+    public function editRegistration($registration_id)
+    {
+        $registration = Registration::dataWithID($registration_id);
         $categories = DB::table('categories')
             ->select('id', DB::raw('CONCAT(name, " (", description, ")") AS category_formatted'))
             ->get();
@@ -88,15 +88,13 @@ class RegistrationController extends Controller
             ->get();
 
 
-            return view('admin.AdminEditParticipant', [
-                'title'=>'Edit Registration',
-                'categories'=> $categories,
-                'schedules'=> $schedules,
-                'schools'=>$schools,
-                'registration'=>$registration
-            ]);
-
-
+        return view('admin.AdminEditParticipant', [
+            'title' => 'Edit Registration',
+            'categories' => $categories,
+            'schedules' => $schedules,
+            'schools' => $schools,
+            'registration' => $registration
+        ]);
     }
 
     /**
@@ -111,13 +109,11 @@ class RegistrationController extends Controller
         $categories = Category::select(
             'id',
             DB::raw("CONCAT(name, ' (', description, ')') as category_formatted")
-        )->get(
-        );
+        )->get();
         $schedules = Schedule::select(
             'id',
             DB::raw("CONCAT(name, ' - ', description) as schedule_formatted")
-        )->get(
-        );
+        )->get();
 
         return view('Registration', compact('schools', 'categories', 'schedules'));
     }
@@ -163,14 +159,15 @@ class RegistrationController extends Controller
         return view('registrations.edit', compact('registration'));
     }
 
-    public function change(Request $request, Registration $registration){
+    public function change(Request $request, Registration $registration)
+    {
         DB::beginTransaction();
 
         try {
             $student = $registration->student;
             $companion = $registration->companion;
 
-            
+
             $student->update([
                 'name' => $request->studentName,
                 'email' => $request->studentEmail,
@@ -254,7 +251,7 @@ class RegistrationController extends Controller
             'Language',
             'Score',
             'Rank Percentile',
-            'Event Year',
+            'Event',
             'Student Name',
             'School Name',
             'Companion Name',
@@ -291,7 +288,8 @@ class RegistrationController extends Controller
     /**
      * Import registrations from a CSV file.
      */
-    public function importCSV(Request $request){
+    public function importCSV(Request $request)
+    {
         $request->validate([
             'file' => 'required|mimes:csv,txt'
         ]);

@@ -14,14 +14,16 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StudentController;
 
+//Index
 Route::get('/', function () {
     return view('index');
 });
 
+//Login Register
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [FormController::class, 'create']);
 
-
+//Companion
 Route::middleware([RoleMiddleware::class . ':companion'])->group(function () {
     Route::get('companion/dashboard', [DashboardController::class, 'companion']);
     Route::get('companion/user', [UserController::class, 'companionDetailUser']);
@@ -31,6 +33,7 @@ Route::middleware([RoleMiddleware::class . ':companion'])->group(function () {
     Route::put('companion/updateUser', [UserController::class, 'updateCompanion']);
 });
 
+//Student
 Route::middleware([RoleMiddleware::class . ':student'])->group(function () {
     Route::get('student/dashboard', [DashboardController::class, 'student']);
     Route::get('student/detailUser', [UserController::class, 'studentDetailUser']);
@@ -38,6 +41,7 @@ Route::middleware([RoleMiddleware::class . ':student'])->group(function () {
     Route::put('student/updateUser', [UserController::class, 'updateStudent']);
 });
 
+//Admin
 Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/detailUser/{user_id}', [UserController::class, 'detailUser']);
@@ -54,11 +58,10 @@ Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/detailEvent/{event_id}', [EventController::class, 'detailEvent']);
     Route::get('/editEvent/{event_id}', [EventController::class, 'editEvent']);
     Route::put('/updateEvent', [EventController::class, 'update']);
+    Route::post('/export', [EventController::class, 'exportCSV']) -> name('export');
 });
 
-
-Route::get('/export', [RegistrationController::class, 'exportCSV'])->name('export');
-
+//Resource
 Route::resource('categories', CategoryController::class);
 Route::resource('companions', CompanionController::class);
 Route::resource('events', EventController::class);

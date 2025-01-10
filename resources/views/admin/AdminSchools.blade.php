@@ -11,7 +11,7 @@
         />
         <button>Search</button>
     </form>
-    <table class="w-full  rounded-[20px] table-auto border-collapse rounded-md">
+    <table class="w-full table-auto border-collapse rounded-md">
         <tr>
             <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 py-2">ID</th>
             <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 py-2">Name</th>

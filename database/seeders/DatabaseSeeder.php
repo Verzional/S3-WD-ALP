@@ -16,25 +16,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([
-        //     UserSeeder::class,
-        //     EventSeeder::class,
-        //     StudentSeeder::class,
-        //     CategorySeeder::class,
-        //     ScheduleSeeder::class,
-        //     SchoolSeeder::class,
-        //     CompanionSeeder::class,
-        //     RegistrationSeeder::class
-        // ]);
+        $this->call([
+            UserSeeder::class,
+            EventSeeder::class,
+            StudentSeeder::class,
+            CategorySeeder::class,
+            ScheduleSeeder::class,
+            SchoolSeeder::class,
+            CompanionSeeder::class,
+            RegistrationSeeder::class
+        ]);
 
         /**
          * Use after the first call to seed the database
          */
-        $this->call([
-            UserSeeder::class,
-            StudentSeeder::class,
-            CompanionSeeder::class,
-            RegistrationSeeder::class
-        ]);
+        // $this->call([
+        //     UserSeeder::class,
+        //     StudentSeeder::class,
+        //     CompanionSeeder::class,
+        //     RegistrationSeeder::class
+        // ]);
     }
 }

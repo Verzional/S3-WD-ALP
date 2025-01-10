@@ -19,4 +19,9 @@
             <p class="text-black">{{ $event->scheduleDescription }}</p>
         </div>
     </div>
+    <form method="POST" action="{{ route('export') }}">
+        @csrf
+        <input type="hidden" name="event_id" value="{{ $event->id }}">
+        <button type="submit" class="btn btn-primary">Export to CSV</button>
+    </form>    
 </x-account-layout>

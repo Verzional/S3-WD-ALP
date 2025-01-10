@@ -1,6 +1,6 @@
 <html>
     <head>
-        @vite(['resources/css/app.css', 'resources/css/login-register.css'])
+        @vite(['resources/css/app.css', 'resources/css/login-register.css', 'resources/css/font.css'])
 
     </head>
     <body>
@@ -14,7 +14,7 @@
             <div id="containerLR" class="absolute z-2 relative p-5  justify-center flex px-10 ">
                 
                 <div class="absolute inset-0 bg-[#505E00] opacity-80 rounded-[20px] z-4"></div>
-                <div class="relative w-[400px] justify-center z-10">
+                <div class="relative w-[80vw] lg:w-[400px] justify-center z-10">
                     {{ $slot }}
                 </div>
             </div>

@@ -19,30 +19,40 @@ Route::get('/', function () {
 });
 
 Route::post('/login', [LoginController::class, 'login']);
+Route::get('/register', [FormController::class, 'create']);
 
 
 Route::middleware([RoleMiddleware::class . ':companion'])->group(function () {
     Route::get('companion/dashboard', [DashboardController::class, 'companion']);
     Route::get('companion/user', [UserController::class, 'companionDetailUser']);
+    Route::get('companion/editUser', [UserController::class, 'companionEditUser']);
     Route::get('companion/participants', [RegistrationController::class, 'companion']);
     Route::get('companion/detailParticipant/{registration_id}', [RegistrationController::class, 'detailCompanionRegistration']);
+    Route::put('companion/updateUser', [UserController::class, 'updateCompanion']);
 });
 
 Route::middleware([RoleMiddleware::class . ':student'])->group(function () {
     Route::get('student/dashboard', [DashboardController::class, 'student']);
     Route::get('student/detailUser', [UserController::class, 'studentDetailUser']);
+    Route::get('student/editUser', [UserController::class, 'studentEditUser']);
+    Route::put('student/updateUser', [UserController::class, 'updateStudent']);
 });
 
 Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/detailUser/{user_id}', [UserController::class, 'detailUser']);
-    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/student', [UserController::class, 'index']);
+    Route::get('/companion', [UserController::class, 'teachers']);
     Route::get('/participants', [RegistrationController::class, 'index']);
     Route::get('/detailParticipant/{registration_id}', [RegistrationController::class, 'detailRegistration']);
+    Route::get('/editParticipant/{registration_id}', [RegistrationController::class, 'editRegistration']);
+    Route::put('/updateParticipant/{registration}', [RegistrationController::class, 'change'])->name('updateParticipant');
     Route::get('/schools', [SchoolController::class, 'index']);
     Route::get('/detailSchool/{school_id}', [SchoolController::class, 'detailSchool']);
     Route::get('/events', [EventController::class, 'index']);
     Route::get('/detailEvent/{event_id}', [EventController::class, 'detailEvent']);
+    Route::get('/editEvent/{event_id}', [EventController::class, 'editEvent']);
+    Route::put('/updateEvent', [EventController::class, 'update']);
 });
 
 

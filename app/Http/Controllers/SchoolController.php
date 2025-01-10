@@ -7,8 +7,16 @@ use Illuminate\Http\Request;
 
 class SchoolController extends Controller
 {
-    public function index(){
-        $schools = School::paginate(10);
+    public function index(Request $request){
+        $search = $request->input('search');
+        $schools= School::where(function ($query) use ($search) {
+            if ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('city', 'like', '%' . $search . '%')
+                ->orWhere('level', 'like', '%' . $search . '%');
+
+            }
+        })->paginate(8);
             return view('admin.AdminSchools',[
                 'title' => 'Schools',
                 'schools' => $schools

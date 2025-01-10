@@ -1,6 +1,6 @@
 <x-account-layout>
     <x-slot:header>{{ $title }} </x-slot:header>
-    <form action="">
+    <form action="{{ url('companion/participants') }}" method="GET">
         @csrf
         <input 
             type="text" 
@@ -23,7 +23,7 @@
         </tr>
         @foreach ($registrations as $stu)
         
-        <tr class="odd:bg-[#FCF9F4] even:bg-[#D2DAC2]">
+        <tr class="even:bg-[#FCF9F4] odd:bg-[#D2DAC2]">
             @if($loop->last)
 
             <td class="border-2 border-[#5D6749] text-center rounded-bl-[20px] lg:text-xs text-3xl p-2">{{ $stu->id }}</td>
@@ -46,7 +46,7 @@
             <td class="border-2 border-[#5D6749] lg:text-xs text-3xl hidden lg:table-cell p-2">{{ $stu->category->name }}</td>
             <td class="border-2 border-[#5D6749] lg:text-xs text-3xl  p-2">{{ $stu->event->year }}</td>
 
-            <td class="border-2 border-[#5D6749] px-10 lg:text-xs text-3xl py-10 lg:py-4"><a href="detailParticipant/{{ $stu['id'] }}" class="bg-[#FFC815] text-white rounded-[5px] px-5 p-2">Edit</a></td>
+            <td class="border-2 border-[#5D6749] text-center px-10 lg:text-xs text-3xl py-10 lg:py-4"><a href="detailParticipant/{{ $stu['id'] }}" class="bg-[#FFC815] text-white text-center rounded-[5px] px-5 p-2">Edit</a></td>
             @endif
         </tr>
     @endforeach

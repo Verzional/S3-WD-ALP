@@ -15,4 +15,8 @@ class Student extends Model
     {
         return $this->hasMany(Registration::class);
     }
+
+    public static function dataWithID($id){
+        return static::find($id);
+    }
 }

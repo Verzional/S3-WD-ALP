@@ -5,11 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Registration;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class RegistrationController extends Controller
 {
-    public function index(){
-        $registrations = Registration::paginate(8);
+    public function index(Request $request){
+        $search = $request->input('search');
+        $registrations = Registration::where(function ($query) use ($search) {
+            if ($search) {
+                $query->whereHas('student', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                })->orWhereHas('school', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                })->orWhereHas('category', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
+            }
+        })->paginate(8);
             return view('admin.AdminParticipants',[
                 'title' => 'Participants',
                 'registrations' => $registrations
@@ -18,9 +29,23 @@ class RegistrationController extends Controller
         
     }
 
-    public function companion(){
+    public function companion(Request $request){
         $user = User::find(session('user'));
-        $registrations = Registration::where('companion_id', '=',$user->account_id)->paginate(8);
+        $search = $request->input('search');
+
+        $registrations = Registration::where('companion_id', $user->account_id)
+        ->where(function ($query) use ($search) {
+            if ($search) {
+                $query->whereHas('student', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                })->orWhereHas('school', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                })->orWhereHas('category', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
+            }
+        })
+        ->paginate(8);
             return view('companion.CompanionParticipants',[
                 'title' => 'Participants',
                 'registrations' => $registrations
@@ -43,9 +68,35 @@ class RegistrationController extends Controller
             'title' => 'Participant Information',
             'registration' => Registration::dataWithID($registration_id)
         ]);
+        
 
     
-}
+    }
+
+    public function editRegistration($registration_id){
+        $registration= Registration::dataWithID($registration_id);
+        $categories = DB::table('categories')
+            ->select('id', DB::raw('CONCAT(name, " (", description, ")") AS category_formatted'))
+            ->get();
+        $schedules = DB::table('schedules')
+            ->select('id', DB::raw('CONCAT(name, " (", description, ")") AS schedule_formatted'))
+            ->get();
+        $schools = DB::table('schools')
+            ->select('id', DB::raw('CONCAT(name, " - ", city) AS school_formatted'))
+            ->orderBy(DB::raw('CONCAT(name, " - ", city)'), 'asc')
+            ->get();
+
+
+            return view('admin.AdminEditParticipant', [
+                'title'=>'Edit Registration',
+                'categories'=> $categories,
+                'schedules'=> $schedules,
+                'schools'=>$schools,
+                'registration'=>$registration
+            ]);
+
+
+    }
 
     public function create()
     {
@@ -72,7 +123,7 @@ class RegistrationController extends Controller
         $validated['companion_id'] = $companionId;
         $validated['student_id'] = $studentId;
 
-        Registration::create($validated);
+        $registration = Registration::create($validated);
 
         return redirect()->route('registrations.create')->with('success', 'Registration created successfully.');
     }
@@ -91,6 +142,46 @@ class RegistrationController extends Controller
     public function edit(Registration $registration)
     {
         return view('registrations.edit', compact('registration'));
+    }
+
+    public function change(Request $request, Registration $registration){
+        DB::beginTransaction();
+
+        try {
+            $student = $registration->student;
+            $companion = $registration->companion;
+
+            
+            $student->update([
+                'name' => $request->studentName,
+                'email' => $request->studentEmail,
+                'gender' => $request->studentGender,
+                'contact' => $request->studentContact
+            ]);;
+
+            $companion->update([
+                'name' => $request->companionName,
+                'status' => $request->companionStatus,
+                'contact' => $request->companionContact
+            ]);
+
+            $registration->update([
+                'grade' => $request->grade,
+                'level' => $request->level,
+                'school_id' => $request->school_id,
+                'language' => $request->language,
+                'category_id' => $request->category_id,
+                'schedule_id' => $request->schedule_id
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('registrations.index')->with('success', 'Registration successful!');
+        } catch (Exception $e) {
+            DB::rollback();
+
+            throw $e;
+        }
     }
 
     /**

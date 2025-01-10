@@ -63,15 +63,19 @@ public function companion(registrationsCategoryStudents $chart, registrationsLan
     $chart = $chart->build();
     $chart2 = $chart2->build();
     $user = User::find(session('user'));
+    $status = Companion::dataWithID($user->account_id);
+    $school = $status->school->name;
     $registration =Registration::where('companion_id', $user->account_id)->orderBy('created_at', 'desc')->first();
     $year = Event::where('id', $registration->event_id)->value('year');
-    $participants = Registration::where('companion_id', session('user'))->count();
+    $participants = Registration::where('companion_id', $user->account_id)->count();
     return view('companion.CompanionDashboard', [
         'title' => 'Dashboard',
         'chart' => $chart,
         'chart2'=> $chart2,
         'participants' => $participants,
-        'year' => $year
+        'year' => $year,
+        'status' => $status->status,
+        'school'=> $school
 
     ]);
 }

@@ -1,30 +1,31 @@
-<x-login-register-layout>
-            <h1 class="text-2xl font-bold text-gray-700 dark:text-gray-300 text-center mb-6">Fill Out This Form</h1>
-
-            <form action="{{ route('forms.store') }}" method="POST" autocomplete="off" class="space-y-4">
-                @csrf
-
-                <!-- Step 1 -->
-                <div id="step-1" class="step">
-                    <!-- Name Field -->
+<x-account-layout>
+    <x-slot:header>
+        <p class="text-black font-bold text-6xl lg:text-4xl mb-5">{{ $title }}</p> 
+    </x-slot:header>
+    <div class="bg-[#FCF9F4] shadow-md px-10 py-10 lg:px-5 justify-center rounded-[50px] items-center">
+        <form action="{{ route('updateParticipant', $registration->id) }}" method="POST">
+            @csrf
+            @method('put')
+            <div class="flex flex-col gap-5 lg:flex-row">
+                <div>
                     <label for="studentName" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nama
                         Lengkap</label>
-                    <input type="text" id="studentName" name="studentName"
+                    <input type="text" id="studentName" name="studentName" value="{{ $registration->student->name }}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Nama Lengkap" required />
 
                     <!-- Email Field -->
                     <label for="studentEmail" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Email</label>
-                    <input type="email" id="studentEmail" name="studentEmail"
+                    <input type="email" id="studentEmail" name="studentEmail" value="{{ $registration->student->email }}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Email Anda" required />
 
                     <!-- Gender Field -->
                     <label for="studentGender" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Gender</label>
-                    <select id="studentGender" name="studentGender"
+                    <select id="studentGender" name="studentGender" value="{{ $registration->student->gender }}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
-                        <option value="" disabled selected>Pilih Gender</option>
+                        <option value="{{ $registration->student->gender }}" disabled  {{ !$registration->student->gender ? 'selected' : '' }}>Pilih Gender</option>
                         <option value="Laki-laki">Laki-laki</option>
                         <option value="Perempuan">Perempuan</option>
                     </select>
@@ -32,24 +33,14 @@
                     <!-- Contact Field -->
                     <label for="studentContact" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nomor
                         HP</label>
-                    <input type="tel" id="studentContact" name="studentContact"
+                    <input type="tel" id="studentContact" name="studentContact" value="{{ $registration->student->contact }}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Nomor HP Siswa/Orang Tua/ Wali" required />
-
-                    <!-- Next Button -->
-                    <div class="flex justify-end mt-4">
-                        <button type="button"
-                            class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
-                            onclick="nextStep(2)">Next</button>
-                    </div>
                 </div>
-
-                <!-- Step 2 -->
-                <div id="step-2" class="step hidden">
-                    <!-- Grade Field -->
+                <div>
                     <label for="grade" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Kelas Saat
                         Ini</label>
-                    <select id="grade" name="grade"
+                    <select id="grade" name="grade" value="{{ $registration->grade}}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
                         <option value="1">1</option>
@@ -69,7 +60,7 @@
                     <!-- Level Field -->
                     <label for="level" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Jenjang
                         Sekolah</label>
-                    <select id="level" name="level"
+                    <select id="level" name="level" value="{{ $registration->level}}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
                         <option value="SD">SD</option>
@@ -88,39 +79,26 @@
                     <select id="school" name="school_id"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
-                        <option value="" disabled selected>Pilih Sekolah</option>
+                        <option value="{{ $registration->school->id }}" disabled {{ !$registration->school ? 'selected' : '' }}>Pilih Sekolah</option>
                         @foreach ($schools as $school)
                             <option value="{{ $school->id }}">{{ $school->school_formatted }}</option>
                         @endforeach
                     </select>
-
-                    <!-- Previous and Next Button -->
-                    <div class="flex justify-between mt-4">
-                        <button type="button"
-                            class="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-200"
-                            onclick="prevStep(1)">Previous</button>
-                        <button type="button"
-                            class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
-                            onclick="nextStep(3)">Next</button>
-                    </div>
                 </div>
-
-                <!-- Step 3 -->
-                <div id="step-3" class="step hidden">
-                    <!-- Companion Name Field -->
+                <div>
                     <label for="companionName" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nama
                         Pendamping</label>
-                    <input type="text" id="companionName" name="companionName"
+                    <input type="text" id="companionName" name="companionName" value="{{ $registration->companion->name}}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Nama Pendamping" required />
 
                     <!-- Companion Status Field -->
                     <label for="companionStatus" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Status
                         Pendamping</label>
-                    <select id="companionStatus" name="companionStatus"
+                    <select id="companionStatus" name="companionStatus" value="{{ $registration->companion->status}}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
-                        <option value ="" disabled selected>Pilih Status</option>
+                        <option value ={{ $registration->companion->status }} disabled  {{ !$registration->companion->status ? 'selected' : '' }}>Pilih Status</option>
                         <option value="Guru">Guru</option>
                         <option value="Orang Tua">Orang Tua</option>
                         <option value="Wali">Wali</option>
@@ -129,30 +107,17 @@
                     <!-- Companion Contact Field -->
                     <label for="companionContact" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nomor HP
                         Pendamping</label>
-                    <input type="tel" id="companionContact" name="companionContact"
+                    <input type="tel" id="companionContact" name="companionContact" value="{{ $registration->companion->contact}}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Nomor HP Pendamping" required />
-
-                    <!-- Previous and Next Button -->
-                    <div class="flex justify-between mt-4">
-                        <button type="button"
-                            class="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-200"
-                            onclick="prevStep(2)">Previous</button>
-                        <button type="button"
-                            class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
-                            onclick="nextStep(4)">Next</button>
-                    </div>
                 </div>
-
-                <!-- Step 4 -->
-                <div id="step-4" class="step hidden">
-                    <!-- Language Field -->
+                <div>
                     <label for="language" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Bahasa yang
                         Dipilih</label>
-                    <select id="language" name="language"
+                    <select id="language" name="language" value="{{ $registration->language}}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
-                        <option value="" disabled selected>Pilih Bahasa</option>
+                        <option value={{ $registration->language }} disabled  {{ !$registration->language ? 'selected' : '' }}>Pilih Bahasa</option>
                         <option value="Indonesia">Indonesia</option>
                         <option value="English">English</option>
                     </select>
@@ -160,10 +125,10 @@
                     <!-- Category Field -->
                     <label for="category" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Kategori
                         yang Diikuti</label>
-                    <select id="category" name="category_id"
+                    <select id="category" name="category_id" value="{{ $registration->category->id}}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
-                        <option value="" disabled selected>Pilih Kategori</option>
+                        <option value={{ $registration->category }} disabled  {{ !$registration->category ? 'selected' : '' }}>Pilih Kategori</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->category_formatted }} </option>
                         @endforeach
@@ -172,40 +137,27 @@
                     <!-- Schedule Field -->
                     <label for="schedule" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Sesi yang
                         Dipilih</label>
-                    <select id="schedule" name="schedule_id"
+                    <select id="schedule" name="schedule_id" value="{{ $registration->schedule->id}}"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
-                        <option value="" disabled selected>Pilih Sesi</option>
+                        <option value={{ $registration->schedule }} disabled  {{ !$registration->schedule ? 'selected' : '' }}>Pilih Sesi</option>
                         @foreach ($schedules as $schedule)
                             <option value="{{ $schedule->id }}">{{ $schedule->schedule_formatted }}</option>
                         @endforeach
                     </select>
-
-                    <!-- Previous and Submit Button -->
-                    <div class="flex justify-between mt-4">
-                        <button type="button"
-                            class="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-200"
-                            onclick="prevStep(3)">Previous</button>
-                        <button type="submit"
-                            class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-200">Submit</button>
-                    </div>
                 </div>
-            </form>
+                
+                    
+            </div>
+            
+            
+            <div class="text-center">
+                <button type="submit" 
+                        class="w-full mt-10 font-medium bg-[#FFC815]  text-[#FCF9F4] text-4xl lg:text-base hover:bg-[#FCF9F4] hover:text-[#FFC815] py-10 lg:py-2 px-4 rounded-lg  transition duration-200">
+                    Update
+                </button>
+            </div>
+        </Form>
+    </div>
 
-    <!-- Script -->
-    <script>
-        function nextStep(step) {
-            const steps = document.querySelectorAll('.step');
-            steps.forEach((step) => step.classList.add('hidden'));
-
-            document.getElementById('step-' + step).classList.remove('hidden');
-        }
-
-        function prevStep(step) {
-            const steps = document.querySelectorAll('.step');
-            steps.forEach((step) => step.classList.add('hidden'));
-
-            document.getElementById('step-' + step).classList.remove('hidden');
-        }
-    </script>
-</x-login-register-layout>
+</x-account-layout>

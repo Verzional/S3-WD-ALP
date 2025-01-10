@@ -6,38 +6,34 @@
 
         
 
-    <div class="flex justify-center gap-5 mt-5">
+    <div class="flex flex-col lg:flex-row justify-center gap-5 mt-5">
 
         <div class="flex flex-col bg-[#FCF9F4] py-10 p-5 justify-center rounded-[50px] basis-[50%] shadow-sm items-center ">
-            <p class="text-4xl font-bold text-[#FFC815] mb-5">{{ $schedule }}</p>
-            <p class="text-2xl font-bold text-black">Schedule</p>
+            <p class="text-6xl lg:text-4xl font-bold text-[#FFC815] mb-5">{{ $schedule }}</p>
+            <p class="text-4xl lg:text-2xl font-bold text-black">Schedule</p>
         </div>
-        <div class="flex flex-col bg-[#FCF9F4] py-10 px-10 justify-center rounded-[50px] basis-[20%] shadow-sm items-center ">
-            <p class="text-5xl font-bold text-[#FFC815] mb-5">{{ $registration->grade }}</p>
-            <p class="text-2xl font-bold text-black">Grade</p>
-        </div>
-        <div class="flex flex-col bg-[#FCF9F4] py-10 p-5 justify-center rounded-[50px] basis-[30%] shadow-sm items-center ">
-            <p class="text-5xl font-bold text-[#FFC815] mb-5">{{ $registration->language }}</p>
-            <p class="text-2xl font-bold text-black">Language</p>
+        <div class="flex flex-col bg-[#FCF9F4] py-10 p-5 justify-center rounded-[50px] basis-[50%] shadow-sm items-center ">
+            <p class="text-6xl lg:text-4xl font-bold text-[#FFC815] mb-5">{{ $registration->language }}</p>
+            <p class="text-4xl lg:text-2xl font-bold text-black">Language</p>
         </div>
 
     </div>
-    <div class="flex gap-5 mt-5 justify-center items-center">
-        <div class="flex flex-col bg-[#FCF9F4] py-20 p-5 justify-center rounded-[50px] shadow-sm items-center basis-[33%]">
+    <div class="flex flex-col lg:flex-row gap-5 mt-5 justify-center items-center">
+        <div class="flex w-full flex-col bg-[#33E0FF] py-20 p-5 justify-center rounded-[50px] shadow-sm items-center basis-[33%]">
             
-            <p class="text-5xl font-bold text-[#FFC815] mb-5">{{ $score }}</p>
-            <p class="text-2xl font-bold text-black">Score</p>
+            <p class="text-6xl lg:text-4xl font-bold text-[#FFC815] mb-5">{{ $score }}</p>
+            <p class="text-4xl lg:text-2xl font-bold text-white">Score</p>
         </div>
-        <div class="flex flex-col bg-[#FCF9F4] py-20 p-5 justify-center shadow-sm rounded-[50px] items-center basis-[33%]">
+        <div class="flex w-full flex-col bg-[#B6D83F] py-20 p-5 justify-center shadow-sm rounded-[50px] items-center basis-[33%]">
             
-            <p class="text-5xl font-bold text-[#FFC815] mb-5">{{ $rank }} %</p>
-            <p class="text-2xl font-bold text-center text-black">Rank Percentile</p>
+            <p class="text-6xl lg:text-4xl font-bold text-[#FFC815] mb-5">{{ $rank }} %</p>
+            <p class="text-4xl lg:text-2xl font-bold text-center text-white">Rank Percentile</p>
         </div>
 
-        <div class="flex flex-col bg-[#FCF9F4] py-20 p-5 justify-center rounded-[50px] shadow-sm items-center basis-[33%]">
+        <div class="flex w-full flex-col bg-orange-600 py-20 p-5 justify-center rounded-[50px] shadow-sm items-center basis-[33%]">
             
-            <p class="text-5xl font-bold text-[#FFC815] mb-5">{{ $category }}</p>
-            <p class="text-2xl font-bold text-black">Category</p>
+            <p class="text-6xl lg:text-4xl font-bold text-[#FFC815] mb-5">{{ $category }}</p>
+            <p class="text-4xl lg:text-2xl font-bold text-white">Category</p>
         </div>
     </div>
 </x-account-layout>

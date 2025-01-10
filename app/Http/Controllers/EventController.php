@@ -24,6 +24,13 @@ class EventController extends Controller
         ]);
     }
 
+    public function editEvent($id){
+        return view('admin.AdminEditEvent',[
+            'title' => 'Edit Event',
+            'event' => Event::dataWithID($id)
+        ]);
+    }
+
     public function create()
     {
         return view('events.create');

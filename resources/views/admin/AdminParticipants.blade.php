@@ -1,6 +1,6 @@
 <x-account-layout>
     <x-slot:header>{{ $title }} </x-slot:header>
-    <form action="">
+    <form action="{{ url('participants') }}" method="GET">
         @csrf
         <input 
             type="text" 
@@ -11,15 +11,15 @@
         />
         <button>Search</button>
     </form>
-    <table class="w-full table-auto rounded-md">
+    <table class="w-full table-auto rounded-md ">
         <tr>
-            <th class="border-2 border-[#D2DAC2] rounded-tl-[20px]  lg:text-xs text-3xl px-4 py-2 ">ID</th>
-            <th class="border-2 border-[#D2DAC2] lg:text-xs text-3xl px-4 py-2 ">Name</th>
-            <th class="border-2 border-[#D2DAC2] lg:text-xs text-3xl px-4 py-2 hidden lg:table-cell p-2 ">Email</th>
-            <th class="border-2 border-[#D2DAC2] lg:text-xs text-3xl px-4 hidden lg:table-cell py-2 ">School</th>
-            <th class="border-2 border-[#D2DAC2] lg:text-xs text-3xl px-4 hidden lg:table-cell py-2 ">Category</th>
-            <th class="border-2 border-[#D2DAC2] lg:text-xs text-3xl px-4 py-2 ">Year</th>
-            <th class="border-2 border-[#D2DAC2] rounded-tr-[20px]  lg:text-xs text-3xl px-4 py-2 ">Actions</th>
+            <th class="border-2 border-[#262515]  lg:text-xs text-3xl px-4 py-2 ">ID</th>
+            <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 py-2 ">Name</th>
+            <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 py-2 hidden lg:table-cell p-2 ">Email</th>
+            <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 hidden lg:table-cell py-2 ">School</th>
+            <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 hidden lg:table-cell py-2 ">Category</th>
+            <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 py-2 ">Year</th>
+            <th class="border-2 border-[#262515] ]  lg:text-xs text-3xl px-4 py-2 ">Actions</th>
         </tr>
         @foreach ($registrations as $stu)
         

@@ -13,7 +13,7 @@ class FormController extends Controller
      */
     public function index()
     {
-        //
+   
     }
 
     /**
@@ -51,6 +51,9 @@ class FormController extends Controller
 
             $registrationController = new RegistrationController;
             $registrationController->store($request, $companionId, $studentId);
+
+            $userController = new UserController;
+            $userController->store($request, $companionId, $studentId);
 
             DB::commit();
 

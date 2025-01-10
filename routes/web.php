@@ -56,7 +56,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
 });
 
 
-
+Route::get('/export', [RegistrationController::class, 'exportCSV'])->name('export');
 
 Route::resource('categories', CategoryController::class);
 Route::resource('companions', CompanionController::class);

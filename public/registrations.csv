@@ -1,0 +1,36 @@
+ID,Level,Grade,Language,Score,"Rank Percentile","Event Year","Student Name","School Name","Companion Name","Category Name","Session Name"
+1,SD,5,English,8.95,29.73,2022,"Oren Walsh","SD MAITREYAWIRA","Georgette Murazik",Siaga,A
+2,SD,6,Indonesian,38.13,59.48,2024,"Fabiola Romaguera","SD KRISTEN PETRA 7","Lillian Grady MD",Penggalang,C
+3,SMA,10,Indonesian,11.1,64.24,2022,"Isabella Olson DVM","SEKOLAH CIPUTRA","Quincy Senger",SiKecil,D
+4,SMA,10,Indonesian,51.91,66.24,2021,"Rafael Torp","SMA CITRA BERKAT","Christiana Schultz",SiKecil,D
+5,SD,5,Indonesian,59.69,55.02,2021,"Kyle DuBuque MD","SD INTAN PERTAMA HATI","Vernice Hane",Penggalang,A
+6,SMA,12,Indonesian,83.24,14.29,2023,"Emilio Mann Sr.","SMA ELYON CHRISTIAN SCHOOL","Stephany Daugherty DVM",Penggalang,A
+7,SMP,7,English,82.91,73.01,2022,"Miss Willie Dickinson II","SMP KRISTEN LOGOS","Mr. Lamont Dicki",SiKecil,A
+8,SD,4,Indonesian,79.08,81.54,2023,"Ruben Labadie DVM","SD KRISTEN LOGOS","Pansy Schamberger",Siaga,D
+9,SD,6,Indonesian,24.19,51.74,2021,"Terence Willms IV","SD MAITREYAWIRA","Humberto Murazik III",SiKecil,C
+10,SMP,8,English,63.43,61.49,2022,"Leta Hane","SMP ELYON CHRISTIAN SCHOOL","Prof. Dewitt Denesik",Siaga,C
+11,SMA,11,Indonesian,33.23,68.48,2024,"Pete Schuppe","SMA ELYON CHRISTIAN SCHOOL","Cloyd Turcotte",Penegak,B
+12,SD,4,English,96.34,54.01,2021,"Mr. Kurtis Gottlieb","SD INTAN PERTAMA HATI","Eloy Mann",Siaga,A
+13,SD,3,Indonesian,20.62,21.06,2024,"Dr. Ida Leuschke","SD KRISTEN IMMANUEL BILINGUAL CLASS","Blair O'Connell",SiKecil,B
+14,SMA,12,English,99.56,35.96,2021,"Kassandra Predovic","SMA CITRA KASIH","Mireille Schmidt",Penegak,A
+15,SD,4,Indonesian,21.62,0.18,2022,"Elisabeth Pouros","SD KRISTEN IMMANUEL BILINGUAL CLASS","Dayne Spinka",Siaga,A
+16,SD,3,English,55.04,87.21,2023,"Leopold Brown","SD INTAN PERTAMA HATI","Nico Sauer",SiKecil,D
+17,SD,4,English,86.17,34.96,2024,"Dr. Elenora Reichel V","SEKOLAH CIPUTRA","Tia Jacobs DVM",Siaga,B
+18,SMP,8,English,75.55,83.7,2021,"Virginia VonRueden","SMP CITRA BERKAT","Magdalena Howe",Penggalang,B
+19,SMP,7,Indonesian,58.38,86.63,2021,"Casimir Buckridge","SMP CITRA KASIH","Stan Kuvalis",SiKecil,A
+20,SD,6,English,3.99,97.4,2022,"Laila Funk","SEKOLAH CIPUTRA","Dr. Sydnie Rodriguez",Penegak,C
+21,SD,4,English,30.37,82.36,2021,"Dolores Wisoky","SD KRISTEN LOGOS","Izaiah Rolfson",SiKecil,A
+22,SD,6,Indonesian,38.56,16.09,2021,"Palma Carroll","SD CITRA KASIH","Prof. Fredrick Hirthe Sr.",Penggalang,C
+23,SD,5,English,60.59,65.07,2023,"Hobart Kilback","SD KRISTEN PETRA 7","Cathryn D'Amore",Siaga,C
+24,SD,4,English,65.81,67.12,2021,"Kayden Kertzmann","SD INTAN PERTAMA HATI","Prof. Roel Rempel",Penggalang,D
+25,SMA,12,Indonesian,14.75,9.32,2024,"Dr. Myrna Langworth","SMA CITRA KASIH","Koby Beer",Penggalang,C
+26,SMA,11,Indonesian,95.29,39.49,2022,"Prof. Jakayla Von Sr.","SMA ELYON CHRISTIAN SCHOOL","Minnie Mitchell",Penggalang,C
+27,SMA,11,Indonesian,55.54,98.15,2024,"Mariana Ruecker","SMA ELYON CHRISTIAN SCHOOL","Dulce Waters",Penegak,C
+28,SD,6,English,49.15,31.77,2022,"Mrs. Robyn Jenkins II","SD MAITREYAWIRA","Ms. Guadalupe Cassin Jr.",Penegak,A
+29,SD,4,English,83.71,94.67,2021,"Megane Streich","SD KRISTEN IMMANUEL BILINGUAL CLASS","Elouise Prohaska",Penegak,D
+30,SMA,10,English,44.88,56.45,2024,"Dr. Princess Gulgowski","SMA CITRA KASIH","Prof. Gust Walsh DVM",Penegak,A
+31,SMA,10,English,33.79,31.03,2021,"Justice Abshire","SMA CITRA KASIH","Buck Adams",Penggalang,C
+32,SD,5,English,7.14,77.91,2023,"Sadie Mueller","SD KRISTEN PETRA 7","Thomas Lakin",Penegak,D
+33,SD,3,English,92.97,72.49,2024,"Dr. Jaiden Langworth V","SD KRISTEN LOGOS","Joshuah Zulauf",Siaga,C
+34,SMP,8,Indonesian,28.19,30.51,2023,"Bernadine Balistreri","SMP CITRA BERKAT","Reyna Lesch",Penggalang,C
+35,SD,4,Indonesian,25.31,30.57,2024,"Dr. Vergie DuBuque","SD KRISTEN LOGOS","Mrs. Eula Pagac",Penegak,C

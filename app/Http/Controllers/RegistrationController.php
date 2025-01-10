@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Registration;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -98,9 +99,27 @@ class RegistrationController extends Controller
 
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('registrations.create');
+        $schools = School::select(
+            'id',
+            DB::raw("CONCAT(name, ' - ', city) as school_formatted")
+        )->get();
+        $categories = Category::select(
+            'id',
+            DB::raw("CONCAT(name, ' (', description, ')') as category_formatted")
+        )->get(
+        );
+        $schedules = Schedule::select(
+            'id',
+            DB::raw("CONCAT(name, ' - ', description) as schedule_formatted")
+        )->get(
+        );
+
+        return view('Registration', compact('schools', 'categories', 'schedules'));
     }
 
     /**
@@ -217,5 +236,89 @@ class RegistrationController extends Controller
 
         return redirect()->route('registrations.index')->with('success', 'Registration deleted successfully.');
     }
-    
+
+    /**
+     * Export the registrations to a CSV file.
+     */
+    public function exportCSV()
+    {
+        $registrations = Registration::with(['event', 'student', 'school', 'companion', 'category', 'schedule'])->get();
+
+        $filename = "registrations.csv";
+        $handle = fopen($filename, 'w+');
+
+        fputcsv($handle, [
+            'ID',
+            'Level',
+            'Grade',
+            'Language',
+            'Score',
+            'Rank Percentile',
+            'Event Year',
+            'Student Name',
+            'School Name',
+            'Companion Name',
+            'Category Name',
+            'Session Name'
+        ]);
+
+        foreach ($registrations as $registration) {
+            fputcsv($handle, [
+                $registration->id,
+                $registration->level,
+                $registration->grade,
+                $registration->language,
+                $registration->score,
+                $registration->rankPercentile,
+                $registration->event->year ?? 'N/A',
+                $registration->student->name ?? 'N/A',
+                $registration->school->name ?? 'N/A',
+                $registration->companion->name ?? 'N/A',
+                $registration->category->name ?? 'N/A',
+                $registration->schedule->name ?? 'N/A',
+            ]);
+        }
+
+        fclose($handle);
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+        ];
+
+        return response()->download($filename, 'registrations.csv', $headers);
+    }
+
+    /**
+     * Import registrations from a CSV file.
+     */
+    public function importCSV(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:csv,txt'
+        ]);
+
+        $path = $request->file('file')->getRealPath();
+        $data = array_map('str_getcsv', file($path));
+
+        if (count($data) > 0) {
+            foreach ($data as $row) {
+                $registration = new Registration([
+                    'level' => $row[1],
+                    'grade' => $row[2],
+                    'language' => $row[3],
+                    'score' => $row[4],
+                    'rankPercentile' => $row[5],
+                    'event_id' => $row[6],
+                    'student_id' => $row[7],
+                    'school_id' => $row[8],
+                    'companion_id' => $row[9],
+                    'category_id' => $row[10],
+                    'schedule_id' => $row[11]
+                ]);
+
+                $registration->save();
+            }
+        }
+
+        return redirect()->route('registrations.index')->with('success', 'Registrations imported successfully.');
+    }
 }

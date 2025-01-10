@@ -14,13 +14,15 @@
                         placeholder="Nama Lengkap" required />
 
                     <!-- Email Field -->
-                    <label for="studentEmail" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Email</label>
+                    <label for="studentEmail"
+                        class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Email</label>
                     <input type="email" id="studentEmail" name="studentEmail"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         placeholder="Email Anda" required />
 
                     <!-- Gender Field -->
-                    <label for="studentGender" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Gender</label>
+                    <label for="studentGender"
+                        class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Gender</label>
                     <select id="studentGender" name="studentGender"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
@@ -52,6 +54,7 @@
                     <select id="grade" name="grade"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
+                        <option value="" disabled selected>Pilih Kelas</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -72,14 +75,7 @@
                     <select id="level" name="level"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
                         required>
-                        <option value="SD">SD</option>
-                        <option value="SMP">SMP</option>
-                        <option value="SMA">SMA</option>
-                        <option value="MTI">MTI</option>
-                        <option value="MTS">MTs</option>
-                        <option value="MA">MA</option>
-                        <option value="SMK">SMK</option>
-                        <option value="MAK">MAK</option>
+                        <option value="" disabled selected>Pilih Jenjang</option>
                     </select>
 
                     <!-- School Field -->
@@ -127,7 +123,9 @@
                     </select>
 
                     <!-- Companion Contact Field -->
-                    <label for="companionContact" class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nomor HP
+                    <label for="companionContact"
+                        class="block text-gray-600 dark:text-gray-300 font-medium mb-2">Nomor
+                        HP
                         Pendamping</label>
                     <input type="tel" id="companionContact" name="companionContact"
                         class="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-700"
@@ -192,14 +190,26 @@
                 </div>
             </form>
 
-    <!-- Script -->
+    <!-- Form Script -->
     <script>
         function nextStep(step) {
-            const steps = document.querySelectorAll('.step');
-            steps.forEach((step) => step.classList.add('hidden'));
+            const currentStep = document.querySelector(`#step-${step - 1}`);
+            const inputs = currentStep.querySelectorAll('input, select');
 
-            document.getElementById('step-' + step).classList.remove('hidden');
+            let isValid = true;
+            inputs.forEach((input) => {
+                if (!input.reportValidity()) {
+                    isValid = false;
+                }
+            });
+
+            if (isValid) {
+                const steps = document.querySelectorAll('.step');
+                steps.forEach((step) => step.classList.add('hidden'));
+                document.getElementById('step-' + step).classList.remove('hidden');
+            }
         }
+
 
         function prevStep(step) {
             const steps = document.querySelectorAll('.step');
@@ -208,4 +218,21 @@
             document.getElementById('step-' + step).classList.remove('hidden');
         }
     </script>
-</x-login-register-layout>
+
+    <!-- Grade Script -->
+    <script>
+        const grade = document.getElementById('grade');
+        const level = document.getElementById('level');
+
+        grade.addEventListener('change', () => {
+            level.innerHTML = '<option value="" disabled selected>Pilih Jenjang</option>';
+
+            if (grade.value <= 6) {
+                level.innerHTML += '<option value="SD">SD</option>';
+            } else if (grade.value <= 9) {
+                level.innerHTML += '<option value="SMP">SMP</option>';
+            } else {
+                level.innerHTML += '<option value="SMA">SMA</option>';
+            }
+        });
+    </x-login-register-layout>

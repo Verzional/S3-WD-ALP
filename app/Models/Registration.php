@@ -15,7 +15,7 @@ class Registration extends Model
     {
         return $this->belongsTo(Event::class);
     }
-    
+
     public function student()
     {
         return $this->belongsTo(Student::class);
@@ -41,7 +41,8 @@ class Registration extends Model
         return $this->belongsTo(Schedule::class);
     }
 
-    public static function dataWithID($id){
+    public static function dataWithID($id)
+    {
         return static::find($id);
     }
 }

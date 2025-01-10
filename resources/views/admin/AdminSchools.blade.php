@@ -22,20 +22,13 @@
         </tr>
         @foreach ($schools as $sch)
         
-        <tr class="odd:bg-[#FCF9F4] even:bg-[#D2DAC2]">
-            @if($loop->last)
+        <tr class="odd:bg-[#FCF9F4] even:bg-[#E6EED5]">
             <td class="text-center border-2 border-[#D2DAC2] lg:text-base text-3xl p-2">{{ $sch->id }}</td>
             <td class="text-center border-2 border-[#D2DAC2] lg:text-base text-3xl p-2">{{ $sch->name }}</td>
             <td class="text-center border-2 border-[#D2DAC2] lg:text-base text-3xl p-2">{{ $sch->city }}</td>
             <td class="text-center border-2 border-[#D2DAC2] lg:text-base text-3xl  p-2">{{ $sch->level }}</td>
-            <td class="px-10  border-2 border-[#D2DAC2] lg:text-base text-3xl lg:py-0 py-10"><a href="detailSchool/{{ $sch['id'] }}">Edit</a></td>
-            @else
-            <td class="text-center border-2 border-[#D2DAC2] lg:text-base text-3xl p-2">{{ $sch->id }}</td>
-            <td class="text-center border-2 border-[#D2DAC2] lg:text-base text-3xl p-2">{{ $sch->name }}</td>
-            <td class="text-center border-2 border-[#D2DAC2] lg:text-base text-3xl p-2">{{ $sch->city }}</td>
-            <td class="text-center border-2 border-[#D2DAC2] lg:text-base text-3xl  p-2">{{ $sch->level }}</td>
-            <td class="px-10 border-2 border-[#D2DAC2] lg:text-base text-3xl lg:py-0 py-10"><a href="detailSchool/{{ $sch['id'] }}">Edit</a></td>
-            @endif
+            <td class="border-2 border-[#D2DAC2] px-10 lg:text-xs text-3xl py-10 lg:py-4"><a href="detailSchool/{{ $sch['id'] }}"  class=" border-2 border-[#FFC815] text-[#FFC815] rounded-[5px] px-5 p-2 hover:bg-[#FFC815] hover:text-white transition duration-200">Edit</a></td>
+
         </tr>
         @endforeach
     </table>

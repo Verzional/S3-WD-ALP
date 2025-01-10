@@ -23,7 +23,7 @@
         </tr>
         @foreach ($registrations as $stu)
         
-        <tr class="odd:bg-[#FCF9F4] even:bg-[#D2DAC2]">
+        <tr class="odd:bg-[#FCF9F4] even:bg-[#E6EED5]">
 
             <td class="border-2 border-[#D2DAC2] text-center lg:text-xs text-3xl p-2">{{ $stu->id }}</td>
       
@@ -34,7 +34,7 @@
             <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl hidden lg:table-cell p-2">{{ $stu->category->name }}</td>
             <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl  p-2">{{ $stu->event->year }}</td>
 
-            <td class="border-2 border-[#D2DAC2] px-10 lg:text-xs text-3xl py-10 lg:py-4"><a href="detailParticipant/{{ $stu['id'] }}" class="bg-[#FFC815] text-white rounded-[5px] px-5 p-2">Edit</a></td>
+            <td class="border-2 border-[#D2DAC2] px-10 lg:text-xs text-3xl py-10 lg:py-4"><a href="detailParticipant/{{ $stu['id'] }}" class=" border-2 border-[#FFC815] text-[#FFC815] rounded-[5px] px-5 p-2 hover:bg-[#FFC815] hover:text-white transition duration-200">Edit</a></td>
 
         </tr>
     @endforeach

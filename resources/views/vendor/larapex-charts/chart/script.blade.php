@@ -20,7 +20,7 @@
         title: {
             text: "{!! $chart->title() !!}",
             style: {
-                fontSize: '28px',
+                fontSize: '25px',
                 offsetY: -20
 
             }
@@ -36,7 +36,7 @@
             categories: {!! $chart->xAxis() !!},
             labels: {
                 style: {
-                    fontSize: '16px' 
+                    fontSize: '14px' 
                 }
             }
         },

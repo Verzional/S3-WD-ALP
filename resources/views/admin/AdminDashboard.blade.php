@@ -27,7 +27,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <div class="basis-[60%] ml-5 flex flex-col">
+                    <div class="basis-[53.5%] rounded-lg bg-white shadow-md p-5 ml-5 flex flex-col">
                         <p class="text-3xl font-medium">Languages</p>
                         {!! $chart2->container() !!}
                     </div>

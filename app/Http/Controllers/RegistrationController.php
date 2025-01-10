@@ -237,52 +237,68 @@ class RegistrationController extends Controller
     /**
      * Export the registrations to a CSV file.
      */
-    public function exportCSV()
+    public function exportCSV(Request $request)
     {
-        $registrations = Registration::with(['event', 'student', 'school', 'companion', 'category', 'schedule'])->get();
+        $eventId = $request->input('event_id');
 
-        $filename = "registrations.csv";
-        $handle = fopen($filename, 'w+');
-
-        fputcsv($handle, [
-            'ID',
-            'Level',
-            'Grade',
-            'Language',
-            'Score',
-            'Rank Percentile',
-            'Event',
-            'Student Name',
-            'School Name',
-            'Companion Name',
-            'Category Name',
-            'Session Name'
-        ]);
-
-        foreach ($registrations as $registration) {
-            fputcsv($handle, [
-                $registration->id,
-                $registration->level,
-                $registration->grade,
-                $registration->language,
-                $registration->score,
-                $registration->rankPercentile,
-                $registration->event->year ?? 'N/A',
-                $registration->student->name ?? 'N/A',
-                $registration->school->name ?? 'N/A',
-                $registration->companion->name ?? 'N/A',
-                $registration->category->name ?? 'N/A',
-                $registration->schedule->name ?? 'N/A',
-            ]);
+        if (!$eventId) {
+            return back()->with('error', 'No event ID provided');
         }
 
-        fclose($handle);
+        $registrations = Registration::with(['event', 'student', 'school', 'companion', 'category', 'schedule'])
+            ->where('event_id', $eventId)
+            ->get();
+
+        if ($registrations->isEmpty()) {
+            return back()->with('error', 'No registrations found for this event');
+        }
+
+        $filename = "registrations_event_{$eventId}.csv";
 
         $headers = [
             'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
         ];
 
-        return response()->download($filename, 'registrations.csv', $headers);
+        return response()->stream(function () use ($registrations) {
+            $handle = fopen('php://output', 'w');
+
+            // Write CSV header
+            fputcsv($handle, [
+                'ID',
+                'Level',
+                'Grade',
+                'Language',
+                'Score',
+                'Rank Percentile',
+                'Event',
+                'Student Name',
+                'School Name',
+                'Companion Name',
+                'Category Name',
+                'Session Name',
+            ]);
+
+            // Write data rows
+            foreach ($registrations as $registration) {
+                fputcsv($handle, [
+                    $registration->id,
+                    $registration->level,
+                    $registration->grade,
+                    $registration->language,
+                    $registration->score,
+                    $registration->rankPercentile,
+                    $registration->event->year ?? 'N/A',
+                    $registration->student->name ?? 'N/A',
+                    $registration->school->name ?? 'N/A',
+                    $registration->companion->name ?? 'N/A',
+                    $registration->category->name ?? 'N/A',
+                    $registration->schedule->name ?? 'N/A',
+                ]);
+            }
+
+            fclose($handle);
+        }, 200, $headers);
     }
 
     /**

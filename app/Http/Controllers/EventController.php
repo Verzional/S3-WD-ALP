@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Models\Registration;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -94,72 +93,5 @@ class EventController extends Controller
         $event->delete();
 
         return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
-    }
-
-    /**
-     * Export the registrations for a specific event as a CSV file.
-     */
-    public function exportCSV(Request $request)
-    {
-        $eventId = $request->input('event_id');
-
-        if (!$eventId) {
-            return back()->with('error', 'No event ID provided');
-        }
-
-        $registrations = Registration::with(['event', 'student', 'school', 'companion', 'category', 'schedule'])
-            ->where('event_id', $eventId)
-            ->get();
-
-        if ($registrations->isEmpty()) {
-            return back()->with('error', 'No registrations found for this event');
-        }
-
-        $filename = "registrations_event_{$eventId}.csv";
-
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename=\"$filename\"",
-        ];
-
-        return response()->stream(function () use ($registrations) {
-            $handle = fopen('php://output', 'w');
-
-            // Write CSV header
-            fputcsv($handle, [
-                'ID',
-                'Level',
-                'Grade',
-                'Language',
-                'Score',
-                'Rank Percentile',
-                'Event',
-                'Student Name',
-                'School Name',
-                'Companion Name',
-                'Category Name',
-                'Session Name',
-            ]);
-
-            // Write data rows
-            foreach ($registrations as $registration) {
-                fputcsv($handle, [
-                    $registration->id,
-                    $registration->level,
-                    $registration->grade,
-                    $registration->language,
-                    $registration->score,
-                    $registration->rankPercentile,
-                    $registration->event->year ?? 'N/A',
-                    $registration->student->name ?? 'N/A',
-                    $registration->school->name ?? 'N/A',
-                    $registration->companion->name ?? 'N/A',
-                    $registration->category->name ?? 'N/A',
-                    $registration->schedule->name ?? 'N/A',
-                ]);
-            }
-
-            fclose($handle);
-        }, 200, $headers);
     }
 }

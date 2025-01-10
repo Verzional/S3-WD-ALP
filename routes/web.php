@@ -58,7 +58,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/detailEvent/{event_id}', [EventController::class, 'detailEvent']);
     Route::get('/editEvent/{event_id}', [EventController::class, 'editEvent']);
     Route::put('/updateEvent', [EventController::class, 'update']);
-    Route::post('/export', [EventController::class, 'exportCSV']) -> name('export');
+    Route::post('/export', [RegistrationController::class, 'exportCSV']) -> name('export');
 });
 
 //Resource

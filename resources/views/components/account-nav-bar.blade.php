@@ -20,7 +20,7 @@
     @if(session('role')=='admin')
     <nav
         id="navbar"
-        class="hidden lg:flex flex-col lg:block lg:flex-col mt-5 space-y-5 py-5 px-5 transition-all duration-300">
+        class="hidden lg:flex flex-col lg:flex-col mt-5 space-y-5 py-5 px-5 transition-all duration-300">
         <a href="/dashboard" class="{{ request()->is('dashboard') ? 'text-[#FFC815]' : 'text-white'}} flex items-center p-5 lg:p-3 text-5xl lg:text-base rounded-lg hover:bg-[#687B00] transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 lg:h-5 lg:w-5 mr-5 lg:mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h11M9 21V3m6 13h5l-3-3m0 0l3-3m-3 3H9" />
@@ -59,7 +59,7 @@
     @elseif (session('role') == 'student')
     <nav
         id="navbar"
-        class="hidden lg:flex flex-col lg:block lg:flex-col mt-5 space-y-5 py-5 px-5 transition-all duration-300">
+        class="hidden lg:flex flex-col lg:flex-col mt-5 space-y-5 py-5 px-5 transition-all duration-300">
         <a href="/student/dashboard" class="{{ request()->is('student/dashboard') ? 'text-[#FFC815]' : 'text-white'}} flex items-center p-5 lg:p-3 text-5xl lg:text-base rounded-lg hover:bg-[#687B00] transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 lg:h-5 lg:w-5 mr-5 lg:mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h11M9 21V3m6 13h5l-3-3m0 0l3-3m-3 3H9" />
@@ -80,7 +80,7 @@
     @elseif (session('role')=='companion')
     <nav
         id="navbar"
-        class="hidden lg:flex flex-col lg:block lg:flex-col mt-5 space-y-5 py-5 px-5 transition-all duration-300">
+        class="hidden lg:flex flex-col lg:flex-col mt-5 space-y-5 py-5 px-5 transition-all duration-300">
         <a href="/companion/dashboard" class="{{ request()->is('companion/dashboard') ? 'text-[#FFC815]' : 'text-white'}} flex items-center p-5 lg:p-3 text-5xl lg:text-base rounded-lg hover:bg-[#687B00] transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 lg:h-5 lg:w-5 mr-5 lg:mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h11M9 21V3m6 13h5l-3-3m0 0l3-3m-3 3H9" />

@@ -9,14 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $events = Event::paginate(10);
-            return view('admin.AdminEvents',[
-                'title' => 'Events',
-                'events' => $events
-            ]);
-
-        
+        return view('admin.AdminEvents', [
+            'title' => 'Events',
+            'events' => $events
+        ]);
     }
 
     public function detailEvent(Request $request, $id){
@@ -54,8 +53,9 @@ class EventController extends Controller
         
     }
 
-    public function editEvent($id){
-        return view('admin.AdminEditEvent',[
+    public function editEvent($id)
+    {
+        return view('admin.AdminEditEvent', [
             'title' => 'Edit Event',
             'event' => Event::dataWithID($id)
         ]);

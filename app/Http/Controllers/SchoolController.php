@@ -22,7 +22,7 @@ class SchoolController extends Controller
                 'schools' => $schools
             ]);
 
-        
+
     }
 
     public function detailSchool($id){
@@ -35,7 +35,7 @@ class SchoolController extends Controller
 
     public function create()
     {
-        return view('schools.create');
+        return view('registrationSchool');
     }
 
     /**
@@ -44,14 +44,21 @@ class SchoolController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'level' => 'required|string|max:255'
+            'schoolName' => 'required|string|max:255',
+            'schoolCity' => 'required|string|max:255',
+            'schoolLevel' => 'required|string|max:255'
         ]);
 
-        $school = School::create($validated);
+        $validated['status'] = 'pending';
 
-        return redirect()->route('schools.index')->with('success', 'School created successfully.');
+        $school = School::create([
+            'name' => $validated['schoolName'],
+            'city' => $validated['schoolCity'],
+            'level' => $validated['schoolLevel'],
+            'status' => $validated['status']
+        ]);
+
+        return redirect()->route('index')->with('success', 'School created successfully.');
     }
 
     /**

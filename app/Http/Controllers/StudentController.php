@@ -3,28 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Student;
 
 class StudentController extends Controller
 {
-    public function index(){
-        $projects = Project::all();
-            return view('detail',[
-                'title' => 'Detail',
-                'name' => 'Rex',
-                'projects' => $projects
-            ]);
-
-        
-    }
-
-    public function detailID($id){
-        return view('detailed',[
-            'title' => 'Project',
-            'name' => 'Rex',
-            'project' =>Project::dataWithID($id)
-        ]);
-    }
-
     public function create()
     {
         return view('students.create');

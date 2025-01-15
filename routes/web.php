@@ -14,15 +14,17 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StudentController;
 
+//Index
 Route::get('/', function () {
     return view('index');
 });
 
+//login register
 Route::get('/login',[LoginController::class, 'show']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [FormController::class, 'create']);
 
-
+//Companion
 Route::middleware([RoleMiddleware::class . ':companion'])->group(function () {
     Route::get('companion/dashboard', [DashboardController::class, 'companion']);
     Route::get('companion/user', [UserController::class, 'companionDetailUser']);
@@ -33,6 +35,7 @@ Route::middleware([RoleMiddleware::class . ':companion'])->group(function () {
     Route::get('companion/logout', [LoginController::class, 'logout']);
 });
 
+//Student
 Route::middleware([RoleMiddleware::class . ':student'])->group(function () {
     Route::get('student/dashboard', [DashboardController::class, 'student']);
     Route::get('student/detailUser', [UserController::class, 'studentDetailUser']);
@@ -41,6 +44,7 @@ Route::middleware([RoleMiddleware::class . ':student'])->group(function () {
     Route::get('student/logout', [LoginController::class, 'logout']);
 });
 
+//Admin
 Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/detailUser/{user_id}', [UserController::class, 'detailUser']);

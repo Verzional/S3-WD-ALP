@@ -44,7 +44,7 @@
         <div class="flex flex-col basis-[50%] bg-[#FCF9F4] shadow-md py-10 p-5 justify-center rounded-[50px] items-center">
             <p class="text-4xl font-bold text-[#FFC815] mb-5 text-center">Bebras Account</p>
             <div class="flex flex-col lg:flex-row w-full space-y-4 lg:space-y-0 lg:space-x-4">
-                <div class="flex flex-col py-10 px-40 lg:px-5 lg:py-5 justify-center items-center basis-[50%] rounded-md bg-[#9CB668] items-center justify-center">
+                <div class="flex flex-col py-10 px-40 lg:px-5 lg:py-5 basis-[50%] rounded-md bg-[#9CB668] items-center justify-center">
                     <p class="text-4xl lg:text-xl font-medium text-white">Username</p>
                     @if ($user->bebras_username == "")
                     <p class="text-6xl lg:text-2xl text-center font-bold text-white">No Username</p>
@@ -53,7 +53,7 @@
                     @endif
                 </div>
                 
-                <div class="flex flex-col justify-center items-center py-10 px-40 lg:px-5 lg:py-5 basis-[50%] rounded-md bg-[#9CB668] items-center justify-center">
+                <div class="flex flex-col py-10 px-40 lg:px-5 lg:py-5 basis-[50%] rounded-md bg-[#9CB668] items-center justify-center">
                     <p class="text-4xl lg:text-xl font-medium text-white">Password </p> 
                     @if ($user->bebras_username == "")
                     <p class="text-6xl lg:text-2xl text-center font-bold text-white">No Password</p>

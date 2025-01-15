@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Registration;
+use App\Models\School;
+use App\Models\Schedule;
 use App\Models\User;
+use App\Models\Companion;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception;
+
 class RegistrationController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $search = $request->input('search');
 
         $title = 'Participants';
@@ -24,37 +31,34 @@ class RegistrationController extends Controller
                 });
             }
         })->paginate(8);
-            return view('admin.AdminParticipants',[
-                'title' => 'Participants',
-                'registrations' => $registrations
-            ]);
-
-        
+        return view('admin.AdminParticipants', [
+            'title' => 'Participants',
+            'registrations' => $registrations
+        ]);
     }
 
-    public function companion(Request $request){
+    public function companion(Request $request)
+    {
         $user = User::find(session('user'));
         $search = $request->input('search');
 
         $registrations = Registration::where('companion_id', $user->account_id)
-        ->where(function ($query) use ($search) {
-            if ($search) {
-                $query->whereHas('student', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%');
-                })->orWhereHas('school', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%');
-                })->orWhereHas('category', function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%');
-                });
-            }
-        })
-        ->paginate(8);
-            return view('companion.CompanionParticipants',[
-                'title' => 'Participants',
-                'registrations' => $registrations
-            ]);
-
-        
+            ->where(function ($query) use ($search) {
+                if ($search) {
+                    $query->whereHas('student', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    })->orWhereHas('school', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    })->orWhereHas('category', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    });
+                }
+            })
+            ->paginate(8);
+        return view('companion.CompanionParticipants', [
+            'title' => 'Participants',
+            'registrations' => $registrations
+        ]);
     }
 
     public function detailRegistration($registration_id){
@@ -75,13 +79,12 @@ class RegistrationController extends Controller
             'title' => 'Participant Information',
             'registration' => Registration::dataWithID($registration_id)
         ]);
-        
-
-    
     }
 
-    public function editRegistration($registration_id){
-        $registration= Registration::dataWithID($registration_id);
+
+    public function editRegistration($registration_id)
+    {
+        $registration = Registration::dataWithID($registration_id);
         $categories = DB::table('categories')
             ->select('id', DB::raw('CONCAT(name, " (", description, ")") AS category_formatted'))
             ->get();
@@ -94,15 +97,13 @@ class RegistrationController extends Controller
             ->get();
 
 
-            return view('admin.AdminEditParticipant', [
-                'title'=>'Edit Registration',
-                'categories'=> $categories,
-                'schedules'=> $schedules,
-                'schools'=>$schools,
-                'registration'=>$registration
-            ]);
-
-
+        return view('admin.AdminEditParticipant', [
+            'title' => 'Edit Registration',
+            'categories' => $categories,
+            'schedules' => $schedules,
+            'schools' => $schools,
+            'registration' => $registration
+        ]);
     }
 
     /**
@@ -117,13 +118,11 @@ class RegistrationController extends Controller
         $categories = Category::select(
             'id',
             DB::raw("CONCAT(name, ' (', description, ')') as category_formatted")
-        )->get(
-        );
+        )->get();
         $schedules = Schedule::select(
             'id',
             DB::raw("CONCAT(name, ' - ', description) as schedule_formatted")
-        )->get(
-        );
+        )->get();
 
         return view('Registration', compact('schools', 'categories', 'schedules'));
     }
@@ -169,14 +168,15 @@ class RegistrationController extends Controller
         return view('registrations.edit', compact('registration'));
     }
 
-    public function change(Request $request, Registration $registration){
+    public function change(Request $request, Registration $registration)
+    {
         DB::beginTransaction();
 
         try {
             $student = $registration->student;
             $companion = $registration->companion;
 
-            
+
             $student->update([
                 'name' => $request->studentName,
                 'email' => $request->studentEmail,
@@ -248,85 +248,108 @@ class RegistrationController extends Controller
     /**
      * Export the registrations to a CSV file.
      */
-    public function exportCSV()
+    public function exportCSV(Request $request)
     {
-        $registrations = Registration::with(['event', 'student', 'school', 'companion', 'category', 'schedule'])->get();
+        $eventId = $request->input('event_id');
 
-        $filename = "registrations.csv";
-        $handle = fopen($filename, 'w+');
-
-        fputcsv($handle, [
-            'ID',
-            'Level',
-            'Grade',
-            'Language',
-            'Score',
-            'Rank Percentile',
-            'Event Year',
-            'Student Name',
-            'School Name',
-            'Companion Name',
-            'Category Name',
-            'Session Name'
-        ]);
-
-        foreach ($registrations as $registration) {
-            fputcsv($handle, [
-                $registration->id,
-                $registration->level,
-                $registration->grade,
-                $registration->language,
-                $registration->score,
-                $registration->rankPercentile,
-                $registration->event->year ?? 'N/A',
-                $registration->student->name ?? 'N/A',
-                $registration->school->name ?? 'N/A',
-                $registration->companion->name ?? 'N/A',
-                $registration->category->name ?? 'N/A',
-                $registration->schedule->name ?? 'N/A',
-            ]);
+        if (!$eventId) {
+            return back()->with('error', 'No event ID provided');
         }
 
-        fclose($handle);
+        $registrations = Registration::with(['event', 'student', 'school', 'companion', 'category', 'schedule'])
+            ->where('event_id', $eventId)
+            ->get();
+
+        if ($registrations->isEmpty()) {
+            return back()->with('error', 'No registrations found for this event');
+        }
+
+        $filename = "Registrations_Event_{$eventId}.csv";
 
         $headers = [
             'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
         ];
 
-        return response()->download($filename, 'registrations.csv', $headers);
+        return response()->stream(function () use ($registrations) {
+            $handle = fopen('php://output', 'w');
+
+            // Write CSV header
+            fputcsv($handle, [
+                'ID',
+                'Level',
+                'Grade',
+                'Language',
+                'Score',
+                'Rank Percentile',
+                'Event',
+                'Student Name',
+                'School Name',
+                'Companion Name',
+                'Category Name',
+                'Session Name',
+            ]);
+
+            // Write data rows
+            foreach ($registrations as $registration) {
+                fputcsv($handle, [
+                    $registration->id,
+                    $registration->level,
+                    $registration->grade,
+                    $registration->language,
+                    $registration->score,
+                    $registration->rankPercentile,
+                    $registration->event->year ?? 'N/A',
+                    $registration->student->name ?? 'N/A',
+                    $registration->school->name ?? 'N/A',
+                    $registration->companion->name ?? 'N/A',
+                    $registration->category->name ?? 'N/A',
+                    $registration->schedule->name ?? 'N/A',
+                ]);
+            }
+
+            fclose($handle);
+        }, 200, $headers);
     }
 
     /**
      * Import registrations from a CSV file.
      */
-    public function importCSV(Request $request){
-        $request->validate([
-            'file' => 'required|mimes:csv,txt'
-        ]);
+    // public function importCSV(Request $request){
+    //     $request->validate([
+    //         'csv_file' => 'required|mimes:csv,txt|max:10240'
+    //     ]);
 
-        $path = $request->file('file')->getRealPath();
-        $data = array_map('str_getcsv', file($path));
+    //     try {
+    //         $file = $request->file('csv_file');
+    //         $path = $file->getRealPath();
 
-        if (count($data) > 0) {
-            foreach ($data as $row) {
-                $registration = new Registration([
-                    'level' => $row[1],
-                    'grade' => $row[2],
-                    'language' => $row[3],
-                    'score' => $row[4],
-                    'rankPercentile' => $row[5],
-                    'event_id' => $row[6],
-                    'student_id' => $row[7],
-                    'school_id' => $row[8],
-                    'companion_id' => $row[9],
-                    'category_id' => $row[10],
-                    'schedule_id' => $row[11]
-                ]);
+    //         $records = array_map('str_getcsv', file($path));
 
-                $registration->save();
-            }
-        }
+    //         // Skip the header row
+    //         $header =            array_shift($records);
 
-        return redirect()->route('registrations.index')->with('success', 'Registrations imported successfully.');
-    }
+    //         foreach ($records as $record) {
+    //             $registration = new Registration([
+    //                 'level' => $record[1],
+    //                 'grade' => $record[2],
+    //                 'language' => $record[3],
+    //                 'score' => $record[4],
+    //                 'rankPercentile' => $record[5],
+    //                 'event_id' => $record[6],
+    //                 'student_id' => $record[7],
+    //                 'school_id' => $record[8],
+    //                 'companion_id' => $record[9],
+    //                 'category_id' => $record[10],
+    //                 'schedule_id' => $record[11],
+    //             ]);
+
+    //             $registration->save();
+    //         }
+
+    //         return back()->with('success', 'CSV file imported successfully');
+    //     } catch (Exception $e) {
+    //         return back()->with('error', 'An error occurred while importing the CSV file');
+    //     }
+    // }
 }

@@ -7,6 +7,8 @@ use App\Models\Registration;
 use App\Models\School;
 use App\Models\Schedule;
 use App\Models\User;
+use App\Models\Companion;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -253,7 +255,7 @@ class RegistrationController extends Controller
             return back()->with('error', 'No registrations found for this event');
         }
 
-        $filename = "registrations_event_{$eventId}.csv";
+        $filename = "Registrations_Event_{$eventId}.csv";
 
         $headers = [
             'Content-Type' => 'text/csv',
@@ -304,35 +306,41 @@ class RegistrationController extends Controller
     /**
      * Import registrations from a CSV file.
      */
-    public function importCSV(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:csv,txt'
-        ]);
+    // public function importCSV(Request $request){
+    //     $request->validate([
+    //         'csv_file' => 'required|mimes:csv,txt|max:10240'
+    //     ]);
 
-        $path = $request->file('file')->getRealPath();
-        $data = array_map('str_getcsv', file($path));
+    //     try {
+    //         $file = $request->file('csv_file');
+    //         $path = $file->getRealPath();
 
-        if (count($data) > 0) {
-            foreach ($data as $row) {
-                $registration = new Registration([
-                    'level' => $row[1],
-                    'grade' => $row[2],
-                    'language' => $row[3],
-                    'score' => $row[4],
-                    'rankPercentile' => $row[5],
-                    'event_id' => $row[6],
-                    'student_id' => $row[7],
-                    'school_id' => $row[8],
-                    'companion_id' => $row[9],
-                    'category_id' => $row[10],
-                    'schedule_id' => $row[11]
-                ]);
+    //         $records = array_map('str_getcsv', file($path));
 
-                $registration->save();
-            }
-        }
+    //         // Skip the header row
+    //         $header =            array_shift($records);
 
-        return redirect()->route('registrations.index')->with('success', 'Registrations imported successfully.');
-    }
+    //         foreach ($records as $record) {
+    //             $registration = new Registration([
+    //                 'level' => $record[1],
+    //                 'grade' => $record[2],
+    //                 'language' => $record[3],
+    //                 'score' => $record[4],
+    //                 'rankPercentile' => $record[5],
+    //                 'event_id' => $record[6],
+    //                 'student_id' => $record[7],
+    //                 'school_id' => $record[8],
+    //                 'companion_id' => $record[9],
+    //                 'category_id' => $record[10],
+    //                 'schedule_id' => $record[11],
+    //             ]);
+
+    //             $registration->save();
+    //         }
+
+    //         return back()->with('success', 'CSV file imported successfully');
+    //     } catch (Exception $e) {
+    //         return back()->with('error', 'An error occurred while importing the CSV file');
+    //     }
+    // }
 }

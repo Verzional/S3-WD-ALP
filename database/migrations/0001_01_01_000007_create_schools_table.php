@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('city');
             $table->string('level');
+            $table->enum('status', ['accepted', 'pending'])->default('pending');
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('role');
+            $table->integer('account_id');
             $table->string('bebras_username')->nullable();
             $table->string('bebras_password')->nullable();
             $table->rememberToken();

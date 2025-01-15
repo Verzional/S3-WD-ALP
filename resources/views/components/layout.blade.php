@@ -10,12 +10,13 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+    @vite(['resources/css/app.css', 'resources/css/login-register.css', 'resources/css/font.css'])
     <!-- Vite -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </head>
 
-<body class="bg-gray-900">
+<body class="overflow-x-hidden m-0 relative">
+    <x-navbar/>
     {{ $slot }}
 </body>
 

@@ -34,12 +34,19 @@
             <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl hidden lg:table-cell p-2">{{ $stu->category->name }}</td>
             <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl  p-2">{{ $stu->event->year }}</td>
 
-            <td class="border-2 border-[#D2DAC2] px-10 lg:text-xs text-3xl py-10 lg:py-4"><a href="detailParticipant/{{ $stu['id'] }}" class=" border-2 border-[#FFC815] text-[#FFC815] rounded-[5px] px-5 p-2 hover:bg-[#FFC815] hover:text-white transition duration-200">Edit</a></td>
+            <td class="border-2 flex flex-row items-center justify-center border-[#D2DAC2] px-5 lg:text-xs text-3xl py-10 lg:py-4">
+                <a href="detailParticipant/{{ $stu['id'] }}" class=" border-2 flex border-[#FFC815] text-[#FFC815] bg-white rounded-[5px] px-5 p-2 hover:bg-[#FFC815] hover:text-white transition duration-200">View</a>
+                <form action="{{ url('participants/' . $stu->id) }}" method="POST" class="flex items-center ml-5">
+                    @csrf
+                    @method('DELETE')
+                    <button class="border-2 border-[#E42029] text-[#E42029] bg-white rounded-[5px] px-5 p-2 hover:bg-[#E42029] hover:text-white transition duration-200">Delete</button>
+                </form>
+            </td>
 
         </tr>
     @endforeach
     </table>
     <div class="mt-2" >
-        {{ $registrations->links() }}
+        {{ $registrations->appends(['search' => request('search')])->links() }}
     </div>
 </x-account-layout>

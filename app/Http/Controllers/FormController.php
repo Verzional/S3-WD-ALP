@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
+use App\Models\Companion;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,9 +55,17 @@ class FormController extends Controller
             $registrationController->store($request, $companionId, $studentId);
 
             $userController = new UserController;
-            $userController->store($request, $companionId, $studentId);
+            $userStudentId = $userController->store($request, $studentId, "student");
+            $userCompanionId = $userController->store($request, $companionId, "companion");
 
             DB::commit();
+
+
+            return view('admin.AdminDetailEvent',[
+                'title' => 'Event Information',
+                'student' => Student::dataWithID($userStudentId),
+                'companion' => Companion::dataWithID($userCompanionId),
+            ]);
 
             return redirect()->route('forms.create')->with('success', 'Registration successful!');
         } catch (Exception $e) {

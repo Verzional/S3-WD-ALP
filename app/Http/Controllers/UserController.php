@@ -17,8 +17,7 @@ class UserController extends Controller
         $users= User::where(function ($query) use ($search) {
             if ($search) {
                 $query->where('name', 'like', '%' . $search . '%')
-                ->orWhere('username', 'like', '%' . $search . '%')
-                ->orWhere('role', 'like', '%' . $search . '%');
+                ->orWhere('username', 'like', '%' . $search . '%');
 
             }
         })->where('role', 'student')
@@ -106,7 +105,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $studentId, $companionId)
+    public function store(Request $request, $id,$role)
     {
 
         $validation = $request->validate([
@@ -122,21 +121,42 @@ class UserController extends Controller
             'grade' => 'required|string|max:255',
         ]);
 
-        User::create([
-            'name' => $validation['studentName'],
-            'username' => Str::substr($validation['studentName'],0,2) + Str::substr($validation['studentName'], -2),
-            'password' => $request,
-            'role' => "student",
-            'account_id'=> $studentId
-        ]);
 
-        User::create([
-            'name' => $request,
-            'username' => $request,
-            'password' => $request,
-            'role' => "companion",
-            'account_id'=> $companionId
-        ]);
+        if($role == "student"){
+            $student = User::create([
+                            'name' => $validation['studentName'],
+                            'username' => Str::substr($validation['studentName'],0,2) + Str::substr($validation['studentName'], -2),
+                            'password' => Str::substr($validation['studentName'],0,2) + Str::substr($validation['studentName'], -2) + $validation['studentContact'] +  Str::substr($validation['studentName'], -4),
+                            'role' => "student",
+                            'account_id'=> $id
+                        ]);
+            return $student->id;
+        }else if ($role == "companion"){
+            $findCompanion = User::where([
+                'account_id' => $id,
+                'role' => "companion"
+            ])->first();
+            if(!$findCompanion){
+                $companion = User::create([
+                    'name' => $validation['companionName'],
+                    'username' => Str::substr($validation['companionName'],0,2) + Str::substr($validation['companionName'], -2),
+                    'password' => Str::substr($validation['companionName'],0,2) + Str::substr($validation['companionName'], -2) + Str::substr($validation['level'], 0, 2)+ Str::substr($validation['level'], 0, 2),
+                    'role' => "companion",
+                    'account_id'=> $id
+                ]);
+                return $companion->id;
+            }else{
+                return -1;
+            }
+                
+            
+            
+        }
+
+
+        
+
+        
     }
 
     /**

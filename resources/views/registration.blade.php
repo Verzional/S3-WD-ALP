@@ -235,4 +235,5 @@
                 level.innerHTML += '<option value="SMA">SMA</option>';
             }
         });
+        </script>
     </x-login-register-layout>

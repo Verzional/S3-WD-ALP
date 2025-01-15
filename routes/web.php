@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/login',[LoginController::class, 'show']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [FormController::class, 'create']);
 
@@ -29,6 +30,7 @@ Route::middleware([RoleMiddleware::class . ':companion'])->group(function () {
     Route::get('companion/participants', [RegistrationController::class, 'companion']);
     Route::get('companion/detailParticipant/{registration_id}', [RegistrationController::class, 'detailCompanionRegistration']);
     Route::put('companion/updateUser', [UserController::class, 'updateCompanion']);
+    Route::get('companion/logout', [LoginController::class, 'logout']);
 });
 
 Route::middleware([RoleMiddleware::class . ':student'])->group(function () {
@@ -36,6 +38,7 @@ Route::middleware([RoleMiddleware::class . ':student'])->group(function () {
     Route::get('student/detailUser', [UserController::class, 'studentDetailUser']);
     Route::get('student/editUser', [UserController::class, 'studentEditUser']);
     Route::put('student/updateUser', [UserController::class, 'updateStudent']);
+    Route::get('student/logout', [LoginController::class, 'logout']);
 });
 
 Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
@@ -54,10 +57,12 @@ Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/detailEvent/{event_id}', [EventController::class, 'detailEvent']);
     Route::get('/editEvent/{event_id}', [EventController::class, 'editEvent']);
     Route::put('/updateEvent', [EventController::class, 'update']);
+    Route::get('/logout', [LoginController::class, 'logout']);
+    Route::get('/export', [RegistrationController::class, 'exportCSV'])->name('export');
+    Route::delete('/participants/{id}', [RegistrationController::class, 'destroy']);
 });
 
 
-Route::get('/export', [RegistrationController::class, 'exportCSV'])->name('export');
 
 Route::resource('categories', CategoryController::class);
 Route::resource('companions', CompanionController::class);
@@ -65,5 +70,4 @@ Route::resource('events', EventController::class);
 Route::resource('forms', FormController::class);
 Route::resource('registrations', RegistrationController::class);
 Route::resource('schedules', ScheduleController::class);
-Route::resource('schools', SchoolController::class);
 Route::resource('students', StudentController::class);

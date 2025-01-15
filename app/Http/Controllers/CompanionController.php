@@ -38,16 +38,24 @@ class CompanionController extends Controller
         ]);
 
         $validated['currentlyActive'] = true;
-           
-        $companion = Companion::create([
-            'name' => $validated['companionName'],
-            'status' => $validated['companionStatus'],
-            'contact' => $validated['companionContact'],
-            'currentlyActive' => $validated['currentlyActive'],
-            'school_id' => $validated['school_id']
-        ]);
 
-        return $companion->id;
+        $findCompanion = Companion::where('contact', $validated['companionContact'])->first();
+
+        if($findCompanion){
+            return $findCompanion->id;
+        }else{
+            $companion = Companion::create([
+                'name' => $validated['companionName'],
+                'status' => $validated['companionStatus'],
+                'contact' => $validated['companionContact'],
+                'currentlyActive' => $validated['currentlyActive'],
+                'school_id' => $validated['school_id']
+            ]);
+    
+            return $companion->id;
+        }
+           
+        
     }
 
     /**

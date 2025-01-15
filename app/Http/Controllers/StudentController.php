@@ -42,14 +42,21 @@ class StudentController extends Controller
             'studentContact' => 'required|numeric'
         ]);
 
-        $student = Student::create([
-            'name' => $validated['studentName'],
-            'email' => $validated['studentEmail'],
-            'gender' => $validated['studentGender'],
-            'contact' => $validated['studentContact']
-        ]);
+        $findStudent =  Student::where('email', $validated['studentEmail'])->first();
+        if($findStudent){
+            return $findStudent->id;
+        }else{
+            $student = Student::create([
+                'name' => $validated['studentName'],
+                'email' => $validated['studentEmail'],
+                'gender' => $validated['studentGender'],
+                'contact' => $validated['studentContact']
+            ]);
+    
+            return $student->id;
+        }
 
-        return $student->id;
+        
     }
 
     /**

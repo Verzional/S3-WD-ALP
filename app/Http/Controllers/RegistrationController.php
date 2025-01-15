@@ -11,6 +11,8 @@ class RegistrationController extends Controller
 {
     public function index(Request $request){
         $search = $request->input('search');
+
+        $title = 'Participants';
         $registrations = Registration::where(function ($query) use ($search) {
             if ($search) {
                 $query->whereHas('student', function ($q) use ($search) {
@@ -56,9 +58,13 @@ class RegistrationController extends Controller
     }
 
     public function detailRegistration($registration_id){
+
+        $registration = Registration::dataWithID($registration_id);
+        $user = User::dataWithID($registration->student_id);
             return view('admin.AdminDetailParticipant',[
                 'title' => 'Participant Information',
-                'registration' => Registration::dataWithID($registration_id)
+                'registration' => Registration::dataWithID($registration_id),
+                'user'=> $user
             ]);
 
         
@@ -230,8 +236,10 @@ class RegistrationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Registration $registration)
+    public function destroy($id)
     {
+        $registration = Registration::findOrFail($id);
+
         $registration->delete();
 
         return redirect()->route('registrations.index')->with('success', 'Registration deleted successfully.');

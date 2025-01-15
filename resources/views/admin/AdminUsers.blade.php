@@ -22,6 +22,6 @@
             @endforeach
         </div>
     <div class="mt-4" >
-        {{ $users->links() }}
+        {{ $users->appends(['search' => request('search')])->links() }}
     </div>
 </x-account-layout>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -17,11 +19,39 @@ class EventController extends Controller
         
     }
 
-    public function detailEvent($id){
+    public function detailEvent(Request $request, $id){
+        $search = $request->input('seacrh');
+        $school = $request->input('school');
+        $registrations = Registration::where(function ($query) use ($search, $school) {
+            if ($search) {
+                $query->whereHas('student', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                })->orWhereHas('school', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                })->orWhereHas('category', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
+            }
+
+            if ($school){
+                $query->whereHas('school', function ($q) use ($school) {
+                    $q->where('id', $school);
+                });
+            }
+        })->paginate(8);
+        $schools = DB::table('schools')
+            ->select('id', DB::raw('CONCAT(name, " - ", city) AS school_formatted'))
+            ->orderBy(DB::raw('CONCAT(name, " - ", city)'), 'asc')
+            ->get();
+
         return view('admin.AdminDetailEvent',[
             'title' => 'Event Information',
-            'event' => Event::dataWithID($id)
+            'event' => Event::dataWithID($id),
+            'registrations' => $registrations,
+            'schools' => $schools
         ]);
+    
+        
     }
 
     public function editEvent($id){

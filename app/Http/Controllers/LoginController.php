@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
+
+    public function show(){
+        return view('login');
+    }
+
     public function login(Request $request)
 {
     $request->validate([
@@ -41,5 +46,10 @@ class LoginController extends Controller
             return redirect('/companion/dashboard');
         }
 }
+
+    public function logout(){
+        session()->flush();
+        return redirect('/');
+    }
 
 }

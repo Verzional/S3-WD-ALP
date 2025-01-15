@@ -31,7 +31,6 @@
             </svg>
         </a>
         <p class="text-black font-bold text-6xl lg:text-4xl mb-5">{{ $title }}</p>
-        <a href="/editEvent/{{ $event->id }}" class="text-4xl text-black">Edit</a> 
     </x-slot:header>
     <div class="flex flex-col justify-start items-start h-[80vh]">
         <div class="flex gap-5 items-end">
@@ -108,10 +107,10 @@
         <div class="mt-2" >
             {{ $registrations->appends(['search' => request('search'), 'school' => request('school')])->links() }}
         </div>
-    </div>
-    <form method="POST" action="{{ route('export') }}">
-        @csrf
-        <input type="hidden" name="event_id" value="{{ $event->id }}">
-        <button type="submit" class="btn btn-primary">Export to CSV</button>
-    </form>
+        <form method="POST" action="{{ route('export') }}">
+            @csrf
+            <input type="hidden" name="event_id" value="{{ $event->id }}">
+            <button type="submit" class="btn btn-primary">Export to CSV</button>
+        </form>
+    </div> 
 </x-account-layout>

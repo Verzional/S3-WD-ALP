@@ -23,6 +23,8 @@ Route::get('/', function () {
 Route::get('/login',[LoginController::class, 'show']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [FormController::class, 'create']);
+Route::get('/register/school',[SchoolController::class, 'schoolRegistration'] );
+Route::post('/store/school', [SchoolController::class, 'store'])->name('schools.store');
 
 //Companion
 Route::middleware([RoleMiddleware::class . ':companion'])->group(function () {
@@ -48,6 +50,7 @@ Route::middleware([RoleMiddleware::class . ':student'])->group(function () {
 Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/detailUser/{user_id}', [UserController::class, 'detailUser']);
+    Route::get('/detailUser/student/{user_id}', [UserController::class, 'detailUserStudent']);
     Route::get('/student', [UserController::class, 'index']);
     Route::get('/companion', [UserController::class, 'teachers']);
     Route::get('/participants', [RegistrationController::class, 'index']);
@@ -55,14 +58,17 @@ Route::middleware([RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/editParticipant/{registration_id}', [RegistrationController::class, 'editRegistration']);
     Route::put('/updateParticipant/{registration}', [RegistrationController::class, 'change'])->name('updateParticipant');
     Route::get('/schools', [SchoolController::class, 'index']);
+    Route::put('/schools/{school}/approve', [SchoolController::class, 'acceptSchool']);
     Route::get('/detailSchool/{school_id}', [SchoolController::class, 'detailSchool']);
+    Route::delete('/schools/{id}', [SchoolController::class, 'destroy']);
     Route::get('/events', [EventController::class, 'index']);
     Route::get('/events/create', [EventController::class, 'index']);
     Route::get('/detailEvent/{event_id}', [EventController::class, 'detailEvent']);
     Route::get('/editEvent/{event_id}', [EventController::class, 'editEvent']);
+    Route::get('/createEvent',[EventController::class, 'createEvent']);
     Route::put('/updateEvent', [EventController::class, 'update']);
     Route::get('/logout', [LoginController::class, 'logout']);
-    Route::get('/export', [RegistrationController::class, 'exportCSV'])->name('export');
+    Route::post('/export', [RegistrationController::class, 'exportCSV'])->name('export');
     Route::delete('/participants/{id}', [RegistrationController::class, 'destroy']);
 });
 

@@ -81,8 +81,9 @@
                     </ul>
                 </p>
             </div>
-            <div class="pb-20" style="background-image: url('/assets/LeafBottom.png'); background-size:100vw auto;">
+            <div class="pb-20 px-[35%] flex flex-col" style="background-image: url('/assets/LeafBottom.png'); background-size:100vw auto;">
                 <p class="header text-white pt-[15%] text-center text-5xl">Daftar Sekarang</p>
+                <a class="text-center py-5 rounded-lg text-white header mt-5 bg-yellow-500 text-4xl hover:bg-white hover:text-yellow-500 duration-200 transition" href="/register">Register</a>
             </div>
             
 

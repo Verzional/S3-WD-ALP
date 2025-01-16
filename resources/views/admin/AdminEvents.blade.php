@@ -6,15 +6,15 @@
             <a href="/detailEvent/{{ $ev->id }}">
                 <div class="bg-[#505E00] text-[#FCF9F4] font-bold flex-col hover:text-[#FFC815] rounded-[20px] justify-center flex items-center p-5 text-center hover:bg-[#9CB668] transition duration-300">
                     <p class="text-3xl">{{ $ev->year }}</p>
-                    <p>{{ $ev -> description }}</p>
+                    <p>{{ strlen($ev->description) > 19 ? substr($ev->description, 0, 19) . '...' : $ev->description }}</p>
                 </div>
             </a>
             @endforeach
 
         </div>
-        <a class="w-full mt-5">
+        <a href="/createEvent" class="w-full mt-5">
             <div class="bg-[#FFC815] text-[#FCF9F4] hover:bg-[#FCF9F4] hover:text-[#FFC815] rounded-[20px] justify-center flex items-center p-5 text-center transition duration-300">
-                <p class=" font-bold">Add Event</p>
+                <p class=" font-bold text-3xl lg:text-base">Add Event</p>
             </div>
         </a>
 

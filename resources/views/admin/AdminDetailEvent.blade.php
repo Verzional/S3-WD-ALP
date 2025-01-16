@@ -32,7 +32,7 @@
         </a>
         <p class="text-black font-bold text-6xl lg:text-4xl mb-5">{{ $title }}</p>
     </x-slot:header>
-    <div class="flex flex-col justify-start items-start h-[80vh]">
+    <div class="flex flex-col justify-start items-start">
         <div class="flex gap-5 items-end">
             <p class="text-black font-bold text-5xl">{{ $event->year }}</p>
             <a href="/editEvent/{{ $event->id }}" class="text-xl bg-[#FFC815] py-2 px-5 rounded-lg text-white shadow-md hover:bg-white hover:text-[#FFC815] transition duration-200 text-black">Edit</a> 
@@ -40,12 +40,12 @@
                     
         <div class="mt-10 flex gap-5 w-full">
             <div class="flex flex-col bg-white shadow-md rounded-lg p-5 basis-[70%]">
-                <p class="text-xl font-medium text-black">Description</p>
-                <p class="text-black">{{ $event->description }}</p>
+                <p class="text-4xl lg:text-xl font-medium text-black">Description</p>
+                <p class="text-black text-2xl lg:text-base">{{ $event->description }}</p>
             </div>
             <div class="flex flex-col bg-white shadow-md rounded-lg p-5 basis-[30%]">
-                <p class="text-xl font-medium text-black">Schedule</p>
-                <p class="text-black">{{ $event->scheduleDescription }}</p>
+                <p class="text-4xl lg:text-xl font-medium text-black">Schedule</p>
+                <p class="text-black text-2xl lg:text-base">{{ $event->scheduleDescription }}</p>
             </div>
             
             
@@ -83,7 +83,7 @@
                 <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 hidden lg:table-cell py-2 ">City</th>
                 <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 hidden lg:table-cell py-2 ">Category</th>
                 <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 py-2 ">Year</th>
-                <th class="border-2 border-[#262515] ]  lg:text-xs text-3xl px-4 py-2 ">Actions</th>
+                <th class="border-2 border-[#262515] lg:text-xs text-3xl px-4 hidden lg:table-cell py-2 ">Action</th>
             </tr>
             @foreach ($registrations as $stu)
             
@@ -98,8 +98,8 @@
                 <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl hidden lg:table-cell p-2">{{ $stu->school->city }}</td>
                 <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl hidden lg:table-cell p-2">{{ $stu->category->name }}</td>
                 <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl  p-2">{{ $stu->event->year }}</td>
+                <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl  p-2"><a href="detailParticipant/{{ $stu['id'] }}" class=" border-2 flex border-[#FFC815] text-[#FFC815] bg-white rounded-[5px] px-5 p-2 hover:bg-[#FFC815] hover:text-white transition duration-200">View</a></td>
     
-                <td class="border-2 border-[#D2DAC2] px-10 lg:text-xs text-3xl py-10 lg:py-4"><a href="detailParticipant/{{ $stu['id'] }}" class=" border-2 border-[#FFC815] text-[#FFC815] rounded-[5px] px-5 p-2 hover:bg-[#FFC815] hover:text-white transition duration-200">Edit</a></td>
     
             </tr>
         @endforeach
@@ -110,7 +110,7 @@
         <form method="POST" action="{{ route('export') }}">
             @csrf
             <input type="hidden" name="event_id" value="{{ $event->id }}">
-            <button type="submit" class="btn btn-primary">Export to CSV</button>
+            <button type="submit" class="bg-[#FFC815] w-full rounded-lg py-2 mt-5 text-white">Export to CSV</button>
         </form>
     </div> 
 </x-account-layout>

@@ -50,6 +50,14 @@ class UserController extends Controller
 
     }
 
+    public function detailUserStudent($id){
+
+        return view('admin.AdminDetailUser',[
+            'title' => 'User Information',
+            'user' =>User::where('account_id', $id)->where('role','student')->first()
+        ]);
+    }
+
     public function detailUser($id){
 
         return view('admin.AdminDetailUser',[
@@ -57,6 +65,7 @@ class UserController extends Controller
             'user' =>User::dataWithID($id)
         ]);
     }
+
 
     public function studentDetailUser(){
         $user  = User::dataWithID(session('user'));
@@ -123,10 +132,26 @@ class UserController extends Controller
 
 
         if($role == "student"){
+            $parts = explode(' ', $validation['studentName']);
+            $username = Str::lower(
+                Str::substr($parts[0], 0, 1) . 
+                (count($parts) > 1 ? end($parts) : Str::substr($parts[0], 1))
+            );
+            $usernameupdate = $username;
+            if (User::where('username', $username . "25")->exists()) {
+                $suffix = 1;
+                do {
+                    $usernameupdate = $username . $suffix . "25";
+                    $suffix++;
+                } while (User::where('username', $usernameupdate)->exists());
+            } else {
+                $usernameupdate = $username . "25";
+            }
+
             $student = User::create([
                             'name' => $validation['studentName'],
-                            'username' => Str::substr($validation['studentName'],0,2) + Str::substr($validation['studentName'], -2),
-                            'password' => Str::substr($validation['studentName'],0,2) + Str::substr($validation['studentName'], -2) + $validation['studentContact'] +  Str::substr($validation['studentName'], -4),
+                            'username' => Str::lower($usernameupdate),
+                            'password' => Str::lower(Str::substr($validation['studentName'],0,2) . Str::substr($validation['studentName'], -2) . Str::substr($validation['studentEmail'],0,4). Str::substr($validation['studentContact'],-4) ."25"),
                             'role' => "student",
                             'account_id'=> $id
                         ]);
@@ -139,8 +164,8 @@ class UserController extends Controller
             if(!$findCompanion){
                 $companion = User::create([
                     'name' => $validation['companionName'],
-                    'username' => Str::substr($validation['companionName'],0,2) + Str::substr($validation['companionName'], -2),
-                    'password' => Str::substr($validation['companionName'],0,2) + Str::substr($validation['companionName'], -2) + Str::substr($validation['level'], 0, 2)+ Str::substr($validation['level'], 0, 2),
+                    'username' => Str::substr($validation['companionName'],0,2) . Str::substr($validation['companionName'], -2),
+                    'password' => Str::substr($validation['companionName'],0,2) . Str::substr($validation['companionName'], -2) . Str::substr($validation['level'], 0, 2) . Str::substr($validation['level'], 0, 2),
                     'role' => "companion",
                     'account_id'=> $id
                 ]);

@@ -36,11 +36,13 @@
 
             <td class="border-2 flex flex-row items-center justify-center border-[#D2DAC2] px-5 lg:text-xs text-3xl py-10 lg:py-4">
                 <a href="detailParticipant/{{ $stu['id'] }}" class=" border-2 flex border-[#FFC815] text-[#FFC815] bg-white rounded-[5px] px-5 p-2 hover:bg-[#FFC815] hover:text-white transition duration-200">View</a>
-                <form action="{{ url('participants/' . $stu->id) }}" method="POST" class="flex items-center ml-5">
+                <a class="ml-5 border-2 flex border-[#9CB668] text-[#9CB668] bg-white rounded-[5px] px-5 p-2 hover:bg-[#9CB668] hover:text-white transition duration-200" href="/detailUser/student/{{ $stu->student->id }}" >UC</a>
+                <form action="{{ url('participants/' . $stu->id) }}" method="POST" class="flex items-center justify-center mt-4 ml-5">
                     @csrf
                     @method('DELETE')
                     <button class="border-2 border-[#E42029] text-[#E42029] bg-white rounded-[5px] px-5 p-2 hover:bg-[#E42029] hover:text-white transition duration-200">Delete</button>
                 </form>
+                
             </td>
 
         </tr>

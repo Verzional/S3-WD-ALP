@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Registration;
 use App\Models\School;
+use App\Models\Event;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Companion;
@@ -143,7 +144,8 @@ class RegistrationController extends Controller
             'schedule_id' => 'required|exists:schedules,id'
         ]);
 
-        $validated['event_id'] = 1;
+
+        $validated['event_id'] = 5;
         $validated['companion_id'] = $companionId;
         $validated['student_id'] = $studentId;
 

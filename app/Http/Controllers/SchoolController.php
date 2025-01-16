@@ -25,6 +25,17 @@ class SchoolController extends Controller
 
     }
 
+    public function acceptSchool($id){
+        $school = School::findOrFail($id);
+
+
+        $school->status = 'accepted';
+        $school->save();
+
+
+        return redirect('/schools');
+    }
+
     public function detailSchool($id){
 
         return view('admin.AdminDetailSchool',[
@@ -58,7 +69,7 @@ class SchoolController extends Controller
             'status' => $validated['status']
         ]);
 
-        return redirect()->route('index')->with('success', 'School created successfully.');
+        return redirect('/');
     }
 
     /**
@@ -96,9 +107,14 @@ class SchoolController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(School $school) {
+    public function destroy($id) {
+        $school = School::findOrFail( $id);
         $school->delete();
 
-        return redirect()->route('schools.index')->with('success', 'School deleted successfully.');
+        return redirect('/schools');
+    }
+
+    public function schoolRegistration(){
+        return view('registrationSchool');
     }
 }

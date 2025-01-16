@@ -11,10 +11,16 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::paginate(10);
+        $events = Event::paginate(12);
         return view('admin.AdminEvents', [
             'title' => 'Events',
             'events' => $events
+        ]);
+    }
+
+    public function createEvent(){
+        return view('admin.AdminCreateEvent',[
+            'title' => 'Create Event'
         ]);
     }
 
@@ -37,7 +43,7 @@ class EventController extends Controller
                     $q->where('id', $school);
                 });
             }
-        })->paginate(8);
+        })->where('event_id', $id)->paginate(8);
         $schools = DB::table('schools')
             ->select('id', DB::raw('CONCAT(name, " - ", city) AS school_formatted'))
             ->orderBy(DB::raw('CONCAT(name, " - ", city)'), 'asc')
@@ -79,7 +85,7 @@ class EventController extends Controller
 
         $event = Event::create($validated);
 
-        return redirect()->route('events.index')->with('success', 'Event created successfully.');
+        return redirect('/events');
     }
 
     /**

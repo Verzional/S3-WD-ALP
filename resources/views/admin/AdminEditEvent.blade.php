@@ -37,6 +37,13 @@
                 </button>
             </div>
         </Form>
+        <form action="{{ route('events.destroy', ['event' => $event->id]) }}" method="POST" class="flex items-center justify-center mt-4 ml-5">
+            @csrf
+            @method('DELETE')
+            <button class="w-full mt-10 font-medium bg-[#E42029]  text-[#FCF9F4] text-4xl lg:text-base hover:bg-[#FCF9F4] hover:text-[#E42029] py-10 lg:py-2 px-4 rounded-lg  transition duration-200">
+                Delete
+            </button>
+        </form>
     </div>
 
 </x-account-layout>

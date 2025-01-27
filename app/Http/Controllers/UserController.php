@@ -164,14 +164,14 @@ class UserController extends Controller
             if(!$findCompanion){
                 $companion = User::create([
                     'name' => $validation['companionName'],
-                    'username' => Str::substr($validation['companionName'],0,2) . Str::substr($validation['companionName'], -2),
+                    'username' => Str::substr($validation['companionName'],0,2) . Str::substr($validation['companionName'], -3),
                     'password' => Str::substr($validation['companionName'],0,2) . Str::substr($validation['companionName'], -2) . Str::substr($validation['level'], 0, 2) . Str::substr($validation['level'], 0, 2),
                     'role' => "companion",
                     'account_id'=> $id
                 ]);
                 return $companion->id;
             }else{
-                return -1;
+                return $findCompanion->id;
             }
                 
             

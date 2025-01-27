@@ -1,30 +1,30 @@
 <x-layout>
         <div class="header relative flex  w-[100vw] h-[140vh]"  style="background-image: url('/assets/HomeBG1.png'); background-size:cover;">
-            <p class="header text-7xl p-[15%] text-white">Bebras<br/>Challenge</p>
+            <p class="header text-4xl lg:text-7xl p-[5%] lg:p-[15%] text-white">Bebras<br/>Challenge</p>
         </div>
         <div class="about bg-[#505E00] px-[15%] pb-[8%] justify-center items-center w-full flex flex-col">
             <div class="desc flex flex-col">
-                <p class="header text-4xl text-white">Apa itu Bebras Challenge</p>
+                <p class="header text-4xl text-white">Apa itu <span class="text-[#FFC815]">Bebras Challenge</span></p>
                 <p class="body text-white mt-5 text-xl">Bebras Challenge adalah tantangan  para siswa SD/MI, SMP/MTs, SMA/MA/SMK secara online untuk mengedukasi kemampuan problem solving yang di dalamnya terkandung konsep computational thinking (informatika). Bebras task disajikan dalam bentuk uraian persoalan yang dilengkapi dengan gambar menarik agar mudah dipahami siswa.</p>
 
             </div>
             <div class="category mt-10 flex flex-col  w-full">
                 <p class="header text-4xl text-white mb-5">Kategori</p>
-                <div class="flex w-full justify-between grid lg:grid-cols-4 grid-cols-2">
+                <div class="flex w-full grid lg:grid-cols-4 gap-10  grid-cols-2">
                     <div class="flex flex-col items-center mt-5">
-                        <div class="bg-gray-400 w-[120px] h-[120px]"></div>
+                        <div class="bg-gray-100 w-[150px] h-[150px] rounded-[50%] mb-5 "></div>
                         <p class="text-white text-xl body">SiKecil</p>
                     </div>
                     <div class="flex flex-col items-center mt-5">
-                        <div class="bg-gray-400 w-[120px] h-[120px]"></div>
+                        <div class="bg-gray-100 w-[150px] h-[150px] rounded-[50%] mb-5 "></div>
                         <p class="text-white text-xl body">Siaga</p>
                     </div>
                     <div class="flex flex-col items-center mt-5">
-                        <div class="bg-gray-400 w-[120px] h-[120px]"></div>
+                        <div class="bg-gray-100 w-[150px] h-[150px] rounded-[50%] mb-5 "></div>
                         <p class="text-white text-xl body">Penggalang</p>
                     </div>
                     <div class="flex flex-col items-center mt-5">
-                        <div class="bg-gray-400 w-[120px] h-[120px]"></div>
+                        <div class="bg-gray-100 w-[150px] h-[150px] rounded-[50%] mb-5 "></div>
                         <p class="text-white text-xl body">Penegak</p>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         <p class="body text-base lg:text-2xl mt-5">Bagi peserta yang ingin melakukan latihan untuk Bebras Challenge 2024 dapat mengakses latihan soal pada tombol berikut
                         </p>
                         <p class="header text-2xl mt-10 lg:text-4xl">Trial Soal</p>
-                        <p class="body text-base lg:text-2xl mt-5">Biro Bebras UC tidak menyediakan soal-soal untuk berlatih. Silahkan mencari sumber latihan secara mandiri. Namun untuk mempermudah peserta pada saat mengerjakan tantangan, siswa diberikan untuk melakukan coba tantangan / trial pada website resmi<br/><br/>Akses untuk trial akan dibuka HANYA pada tanggal 10-11 November 2024, dan masing-masing siswa diberikan 3 kali kesempatan untuk mencoba soal. 
+                        <p class="body text-base lg:text-2xl mt-5">Biro Bebras UC tidak menyediakan soal-soal untuk berlatih. Silahkan mencari sumber latihan secara mandiri. Namun untuk mempermudah peserta pada saat mengerjakan tantangan, siswa diberikan untuk melakukan coba tantangan / trial pada website resmi<br/><br/>Akses untuk trial akan dibuka HANYA pada tanggal 10-11 November 2024, dan masing-masing siswa diberikan 3 kali kesempatan untuk mencoba soal.
                             <br/><br/>Pastikan untuk melakukan trial / coba soal ini. Selain agar tidak asing dengan aplikasi dan model soal, hal ini juga diperlukan untuk memastikan bahwa username dan password berfungsi dengan baik.
                         </p>
                     </div>
@@ -60,7 +60,7 @@
         </div>
         <div class="bg-gradient-to-b from-40% pt-20 from-[#505E00] to-100% to-[#738701]">
             <div class="px-[15%]">
-                <p class="header text-white text-5xl">Pengumuman Hasil dan Sertifikat</p>
+                <p class="header text-2xl text-white lg:text-5xl">Pengumuman Hasil dan Sertifikat</p>
                 <p class="body text-base lg:text-2xl mt-5">
                     <ul class="list-disc text-white text-2xl body ml-5">
                         <li>Hasil Bebras Challenge akan dipublikasikan setelah semua proses penilaian dan permasalahan selesai ditangani (perkiraan 3-6 minggu setelah test).</li>
@@ -81,8 +81,8 @@
                     </ul>
                 </p>
             </div>
-            <div class="pb-20 px-[35%] flex flex-col" style="background-image: url('/assets/LeafBottom.png'); background-size:100vw auto;">
-                <p class="header text-white pt-[15%] text-center text-5xl">Daftar Sekarang</p>
+            <div class="pb-20 lg:px-[35%] flex flex-col" style="background-image: url('/assets/LeafBottom.png'); background-size:100vw auto;">
+                <p class="header text-white pt-[15%] text-center text-2xl lg:text-5xl">Daftar Sekarang</p>
                 <a class="text-center py-5 rounded-lg text-white header mt-5 bg-yellow-500 text-4xl hover:bg-white hover:text-yellow-500 duration-200 transition" href="/register">Register</a>
             </div>
             

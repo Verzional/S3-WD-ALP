@@ -43,7 +43,7 @@ public function student()
     $registration =Registration::where('student_id', $user->account_id)->orderBy('created_at', 'desc')->first();
     $score = Registration::where('student_id' , $user->account_id)->orderBy('created_at', 'desc')->value('score');
     $rank = Registration::where('student_id' , $user->account_id)->orderBy('created_at', 'desc')->value('rankPercentile');
-    $schedule= trim(Schedule::where('id', $registration->event_id)->orderBy('created_at', 'desc')->value('description'), "Jam ");
+    $schedule= trim(Schedule::where('id', $registration->schedule_id)->orderBy('created_at', 'desc')->value('description'), "Jam ");
     $category = Category::where('id',$registration->category_id)->orderBy('created_at', 'desc')->value('name');
     $year = Event::where('id', $registration->event_id)->value('year');
     return view('student.StudentDashboard', [

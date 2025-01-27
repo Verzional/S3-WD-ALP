@@ -12,40 +12,39 @@
         
         <p class="text-black font-bold text-6xl lg:text-4xl mb-5">{{ $title }}</p> 
     </x-slot:header>
-    <div class="flex flex-col lg:flex-row">
-        <table class="basis-full  lg:mr-5 mb-5 lg:mb-0 border-collapse">
-            <tr>
-                <td class="bg-[#FCF9F4] lg:text-xl text-3xl border-2 border-[#505E00] font-bold px-4 py-2 text-center">ID</td>
-                <td class="bg-[#D2DAC2] lg:text-xl text-3xl border-2 border-[#505E00] px-5 text-center">
-                    <p class="text-black">{{ $user->id }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td class="bg-[#FCF9F4] lg:text-xl text-3xl border-2 border-[#505E00] font-bold px-4 py-2 text-center">Username</td>
-                <td class="bg-[#FCF9F4] lg:text-xl text-3xl border-2 border-[#505E00] px-5 text-center">
-                    <p class="text-black">{{ $user->username }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td class="bg-[#FCF9F4] lg:text-xl text-3xl border-2 border-[#505E00] font-bold px-4 py-2 text-center">Password</td>
-                <td class="bg-[#D2DAC2] lg:text-xl text-base border-2 border-[#505E00] px-5 text-center">
-                    <p class="text-black">{{ $user->password }}</p>
-                </td>
-            </tr>
-            @if ( $user->role   == "student")
-            <tr>
-                <td class="bg-[#FCF9F4] lg:text-xl text-3xl border-2 border-[#505E00] font-bold px-4 py-2 text-center">Bebras Username</td>
-                <td class="bg-[#FCF9F4] lg:text-xl text-3xl border-2 border-[#505E00] px-5 text-center">
-                    <p class="text-black">{{ $user->bebras_username }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td class="bg-[#FCF9F4] lg:text-xl text-3xl border-2 border-[#505E00] font-bold px-4 py-2 text-center">Bebras Password</td>
-                <td class="bg-[#D2DAC2] lg:text-xl text-base border-2 border-[#505E00] px-5 text-center">
-                    <p class="text-black">{{ $user->bebras_password }}</p>
-                </td>
-            </tr>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="p-4 bg-gray-100 rounded-lg shadow">
+            <p class="text-lg font-semibold text-gray-800">ID</p>
+            <p class="text-gray-600">{{ $user->id }}</p>
+        </div>
+        <div class="p-4 bg-gray-100 rounded-lg shadow">
+            <p class="text-lg font-semibold text-gray-800">Name</p>
+            <p class="text-gray-600">{{ $user->username }}</p>
+        </div>
+        <div class="p-4 bg-gray-100 rounded-lg shadow">
+            <p class="text-lg font-semibold text-gray-800">Password</p>
+            <p class="text-gray-600">{{ $user->password }}</p>
+        </div>
+        @if ( $user->role   == "student")
+        <div class="p-4 bg-gray-100 rounded-lg shadow">
+            <p class="text-lg font-semibold text-gray-800">Bebras Username</p>
+            @if($user->bebras_username == '')
+            <p class="text-yellow-500">No Bebras Account Yet</p>
+            @else
+            <p class="text-gray-600">{{ $user->bebras_username }}</p>
             @endif
             
-        </table>
+        </div>
+        <div class="p-4 bg-gray-100 rounded-lg shadow">
+            <p class="text-lg font-semibold text-gray-800">Bebras Password</p>
+            @if($user->bebras_username == '')
+            <p class="text-yellow-500">No Bebras Account Yet</p>
+            @else
+            <p class="text-gray-600">{{ $user->bebras_password }}</p>
+            @endif
+        </div>
+        
+        @endif
+    </div>
+
 </x-account-layout>

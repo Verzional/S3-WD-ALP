@@ -98,7 +98,7 @@
                 <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl hidden lg:table-cell p-2">{{ $stu->school->city }}</td>
                 <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl hidden lg:table-cell p-2">{{ $stu->category->name }}</td>
                 <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl  p-2">{{ $stu->event->year }}</td>
-                <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl  p-2"><a href="detailParticipant/{{ $stu['id'] }}" class=" border-2 flex border-[#FFC815] text-[#FFC815] bg-white rounded-[5px] px-5 p-2 hover:bg-[#FFC815] hover:text-white transition duration-200">View</a></td>
+                <td class="border-2 border-[#D2DAC2] lg:text-xs text-3xl  p-2"><a href="detailParticipant/{{ $stu['id'] }}" class=" border-2 flex   rounded-[5px] px-5 p-2 bg-[#FFC815] text-white hover:text-[#FFC815] hover:bg-white transition duration-200">View</a></td>
     
     
             </tr>

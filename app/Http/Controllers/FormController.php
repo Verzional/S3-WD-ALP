@@ -16,7 +16,7 @@ class FormController extends Controller
      */
     public function index()
     {
-   
+
     }
 
     /**
@@ -27,16 +27,20 @@ class FormController extends Controller
         $categories = DB::table('categories')
             ->select('id', DB::raw('CONCAT(name, " (", description, ")") AS category_formatted'))
             ->get();
+
         $schedules = DB::table('schedules')
             ->select('id', DB::raw('CONCAT(name, " (", description, ")") AS schedule_formatted'))
             ->get();
+
         $schools = DB::table('schools')
             ->select('id', DB::raw('CONCAT(name, " - ", city) AS school_formatted'))
+            ->where('status', 'accepted')
             ->orderBy(DB::raw('CONCAT(name, " - ", city)'), 'asc')
             ->get();
 
         return view('registration', compact('categories', 'schedules', 'schools'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -58,19 +62,16 @@ class FormController extends Controller
             $userController = new UserController;
             $userStudentId = $userController->store($request, $studentId, "student");
             $userCompanionId = $userController->store($request, $companionId, "companion");
-            $student =User::where('id', $userStudentId)->where('role', "student")->first();
-            if($userCompanionId == -1){
-                $companion = null;
-            }else{
-                $companion = User::where('id', $userCompanionId)->where('role', "companion")->first();
-            }
-        
-            DB::commit();
-
+            $student = User::where('id', $userStudentId)->where('role', "student")->first();
+            $companion = User::where('id', $userCompanionId)->where('role', "companion")->first();
             
 
+            DB::commit();
 
-            return view('createdUser',[
+
+
+
+            return view('createdUser', [
                 'student' => $student,
                 'companion' => $companion,
             ]);
